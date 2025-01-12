@@ -44,4 +44,8 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
+
+  saveUserProfile(profileData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/save-profile`, profileData);
+  }
 }

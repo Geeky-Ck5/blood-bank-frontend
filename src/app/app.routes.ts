@@ -26,5 +26,11 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: '' }, // Catch-all route to redirect to the Landing Page
+  { path: '**', redirectTo: '' },
+
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('../components/user-profile/user-profile.component').then((m) => m.UserProfileComponent),
+  }// Catch-all route to redirect to the Landing Page
 ];
