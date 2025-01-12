@@ -1,0 +1,46 @@
+header {
+  background-color: #ff4d4d; /* Matches the theme of the logo */
+  color: white;
+  padding: 1rem;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      display: flex;
+      align-items: center;
+
+      a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+
+        img {
+          height: 60px; /* Adjust the height to fit your design */
+          width: auto;  /* Maintain the aspect ratio */
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+
+      li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          text-decoration: underline;
+          color: #ffd1d1; /* Lighter shade of red for hover */
+        }
+      }
+    }
+  }
+}
