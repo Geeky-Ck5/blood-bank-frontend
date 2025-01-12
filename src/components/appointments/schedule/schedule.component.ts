@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AppointmentService } from '../../../services/appointment.service';
+import {RouterLink} from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule, RouterLink, CommonModule
   ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../../../services/appointment.service';
+import {RouterLink} from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-past',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, CommonModule],
   templateUrl: './past.component.html',
   styleUrl: './past.component.scss'
 })

@@ -26,8 +26,6 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: '' },
-
   {
     path: 'profile',
     loadComponent: () =>
@@ -40,11 +38,11 @@ export const routes: Routes = [
       import('../components/donor-dashboard/donor-dashboard.component').then((m) => m.DonorDashboardComponent),
   },
 
-  {
+/*  {
     path: 'profile',
     loadComponent: () =>
       import('../components/donor-profile/donor-profile.component').then((m) => m.DonorProfileComponent),
-  },
+  },*/
   {
     path: 'change-password',
     loadComponent: () =>
@@ -64,5 +62,58 @@ export const routes: Routes = [
     path: 'appointments/past',
     loadComponent: () =>
       import('../components/appointments/past/past.component').then((m) => m.PastComponent),
-  }
+  },
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('../components/admin-dashboard/admin-dashboard.component').then(
+        (m) => m.AdminDashboardComponent
+      ),
+    children: [
+      {
+        path: 'overview',
+        loadComponent: () =>
+          import('../components/admin/overview/overview.component').then(
+            (m) => m.OverviewComponent
+          ),
+      },
+      {
+        path: 'blood-inventory',
+        loadComponent: () =>
+          import('../components/admin/blood-inventory/blood-inventory.component').then(
+            (m) => m.BloodInventoryComponent
+          ),
+      },
+      {
+        path: 'appointments',
+        loadComponent: () =>
+          import('../components/admin/appointments/appointments.component').then(
+            (m) => m.AppointmentsComponent
+          ),
+      },
+      {
+        path: 'users',
+        loadComponent: () =>
+          import('../components/admin/users/users.component').then(
+            (m) => m.UsersComponent
+          ),
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('../components/admin/reports/reports.component').then(
+            (m) => m.ReportsComponent
+          ),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../components/admin/notifications/notifications.component').then(
+            (m) => m.NotificationsComponent
+          ),
+      },
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+    ],
+  },
+  { path: '**', redirectTo: '' },
 ];

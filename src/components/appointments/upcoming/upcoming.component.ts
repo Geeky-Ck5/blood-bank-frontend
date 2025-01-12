@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../../../services/appointment.service';
+import {RouterLink} from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upcoming',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, CommonModule],
   templateUrl: './upcoming.component.html',
   styleUrl: './upcoming.component.scss'
 })
