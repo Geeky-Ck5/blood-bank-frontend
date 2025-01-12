@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import {NewComponent} from '../components/recipient-blood-request/new/new.component';
+import {HistoryComponent} from '../components/recipient-blood-request/history/history.component';
 
 export const routes: Routes = [
   {
@@ -115,5 +117,64 @@ export const routes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
     ],
   },
+
+  {
+    path: 'recipient-signup',
+    loadComponent: () =>
+      import('../components/recipient-signup/recipient-signup.component').then(
+        (m) => m.RecipientSignupComponent
+      ),
+  },
+
+  {
+    path: 'recipient-profile',
+    loadComponent: () =>
+      import('../components/recipient-profile/recipient-profile.component').then(
+        (m) => m.RecipientProfileComponent
+      ),
+  },
+
+  {
+    path: 'recipient/appointments/schedule',
+    loadComponent: () =>
+      import('../components/recipient-appointments/schedule/schedule.component').then(
+        (m) => m.ScheduleComponent
+      ),
+  },
+
+  {
+    path: 'recipient/appointments/upcoming',
+    loadComponent: () =>
+      import('../components/recipient-appointments/upcoming/upcoming.component').then(
+        (m) => m.UpcomingComponent
+      ),
+  },
+  {
+    path: 'recipient/appointments/past',
+    loadComponent: () =>
+      import('../components/recipient-appointments/past/past.component').then(
+        (m) => m.PastComponent
+      ),
+  },
+  {
+    path: 'recipient/blood-request/new',
+    loadComponent: () =>
+      import('../components/recipient-blood-request/new/new.component').then(
+        (m) => m.NewComponent
+      ),
+  },
+  {
+    path: 'recipient/blood-request/history',
+    loadComponent: () =>
+      import('../components/recipient-blood-request/history/history.component').then(
+        (m) => m.HistoryComponent
+      ),
+  },
+
+
+
+
+
+
   { path: '**', redirectTo: '' },
 ];

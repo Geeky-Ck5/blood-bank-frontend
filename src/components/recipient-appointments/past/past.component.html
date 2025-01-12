@@ -1,0 +1,13 @@
+<div class="appointments">
+  <h2>Past Appointments</h2>
+  <div *ngIf="appointments.length === 0" class="no-appointments">
+    <p>You have no past appointments.</p>
+  </div>
+  <div *ngFor="let appointment of appointments" class="appointment-card">
+    <h3>{{ appointment.donationCenter }}</h3>
+    <p><strong>Date:</strong> {{ appointment.date }}</p>
+    <p><strong>Time:</strong> {{ appointment.time }}</p>
+    <p><strong>Status:</strong> {{ appointment.status }}</p>
+    <p><strong>Notes:</strong> {{ appointment.notes || 'N/A' }}</p>
+  </div>
+</div>

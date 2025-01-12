@@ -1,0 +1,64 @@
+<div class="recipient-signup">
+  <h2>Recipient Registration</h2>
+  <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName"
+        type="text"
+        [(ngModel)]="recipient.first_name"
+        name="first_name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName"
+        type="text"
+        [(ngModel)]="recipient.last_name"
+        name="last_name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="recipient.email"
+        name="email"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        [(ngModel)]="recipient.password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="bloodGroup">Blood Group</label>
+      <select
+        id="bloodGroup"
+        [(ngModel)]="recipient.bloodGroup"
+        name="bloodGroup"
+        required
+      >
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+    <button type="submit" class="register-btn">Register</button>
+  </form>
+</div>

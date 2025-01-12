@@ -1,0 +1,14 @@
+<div class="blood-request-history">
+  <h2>Blood Request History</h2>
+  <div *ngIf="requests.length === 0" class="no-requests">
+    <p>No blood requests found.</p>
+  </div>
+  <div *ngFor="let request of requests" class="request-card">
+    <h3>Blood Type: {{ request.bloodType }}</h3>
+    <p><strong>Quantity:</strong> {{ request.quantity }} units</p>
+    <p><strong>Status:</strong> {{ request.status }}</p>
+    <p><strong>Urgency:</strong> {{ request.urgency }}</p>
+    <p><strong>Reason:</strong> {{ request.reason || 'N/A' }}</p>
+    <p><strong>Submitted On:</strong> {{ request.createdAt }}</p>
+  </div>
+</div>

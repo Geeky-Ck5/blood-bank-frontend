@@ -1,0 +1,15 @@
+<div class="appointments">
+  <h2>Upcoming Appointments</h2>
+  <div *ngIf="appointments.length === 0" class="no-appointments">
+    <p>You have no upcoming appointments.</p>
+  </div>
+  <div *ngFor="let appointment of appointments" class="appointment-card">
+    <h3>{{ appointment.donationCenter }}</h3>
+    <p><strong>Date:</strong> {{ appointment.date }}</p>
+    <p><strong>Time:</strong> {{ appointment.time }}</p>
+    <p><strong>Status:</strong> {{ appointment.status }}</p>
+    <button class="cancel-btn" (click)="cancelAppointment(appointment.id)">
+      Cancel Appointment
+    </button>
+  </div>
+</div>

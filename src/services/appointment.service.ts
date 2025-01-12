@@ -25,4 +25,10 @@ export class AppointmentService {
   cancelAppointment(appointmentId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/cancel/${appointmentId}`);
   }
+
+  scheduleRecipientAppointment(appointmentData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/schedule`, appointmentData);
+  }
+
+
 }

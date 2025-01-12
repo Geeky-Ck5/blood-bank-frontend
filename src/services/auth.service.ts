@@ -59,5 +59,15 @@ export class AuthService {
   changePassword(passwordData: { currentPassword: string; newPassword: string }): Observable<any> {
     return this.http.put(`${this.baseUrl}/change-password`, passwordData);
   }
+  registerRecipient(recipientData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/recipient/register`, recipientData);
+  }
 
+  getRecipientProfile(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/auth/recipient/profile`);
+  }
+
+  updateRecipientProfile(profileData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/auth/recipient/profile`, profileData);
+  }
 }
