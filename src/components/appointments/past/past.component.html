@@ -1,0 +1,9 @@
+<div class="appointments-list">
+  <h2>Past Appointments</h2>
+  <div *ngFor="let appointment of appointments" class="appointment-card">
+    <p><strong>Donation Center:</strong> {{ appointment.donationCenter }}</p>
+    <p><strong>Date:</strong> {{ appointment.date }}</p>
+    <p><strong>Time:</strong> {{ appointment.time }}</p>
+    <p><strong>Status:</strong> {{ appointment.status }}</p>
+  </div>
+</div>

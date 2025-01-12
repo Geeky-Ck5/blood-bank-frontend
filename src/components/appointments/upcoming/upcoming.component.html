@@ -1,0 +1,9 @@
+<div class="appointments-list">
+  <h2>Upcoming Appointments</h2>
+  <div *ngFor="let appointment of appointments" class="appointment-card">
+    <p><strong>Donation Center:</strong> {{ appointment.donationCenter }}</p>
+    <p><strong>Date:</strong> {{ appointment.date }}</p>
+    <p><strong>Time:</strong> {{ appointment.time }}</p>
+    <button (click)="cancelAppointment(appointment.id)">Cancel Appointment</button>
+  </div>
+</div>

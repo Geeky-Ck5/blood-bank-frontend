@@ -1,0 +1,31 @@
+<div class="donor-profile">
+  <h2>Update Profile</h2>
+  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" [(ngModel)]="profile.first_name" name="first_name" required />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" type="text" [(ngModel)]="profile.last_name" name="last_name" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" [(ngModel)]="profile.email" name="email" required readonly />
+    </div>
+    <div class="form-group">
+      <label for="bloodGroup">Blood Group</label>
+      <select id="bloodGroup" [(ngModel)]="profile.bloodGroup" name="bloodGroup" required>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+    </div>
+    <button type="submit" class="save-btn">Save Changes</button>
+  </form>
+</div>

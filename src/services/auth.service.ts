@@ -48,4 +48,16 @@ export class AuthService {
   saveUserProfile(profileData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/save-profile`, profileData);
   }
+
+  getProfile(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/profile`);
+  }
+
+  updateProfile(profileData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/profile`, profileData);
+  }
+  changePassword(passwordData: { currentPassword: string; newPassword: string }): Observable<any> {
+    return this.http.put(`${this.baseUrl}/change-password`, passwordData);
+  }
+
 }

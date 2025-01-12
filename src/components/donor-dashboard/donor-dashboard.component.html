@@ -1,0 +1,37 @@
+<div class="donor-dashboard">
+  <h2>Welcome, {{ donorName }}</h2>
+
+  <!-- Profile Section -->
+  <div class="dashboard-section">
+    <h3>Your Profile</h3>
+    <button routerLink="/profile">Update Profile</button>
+    <button routerLink="/change-password">Change Password</button>
+  </div>
+
+  <!-- Donation Appointments -->
+  <div class="dashboard-section">
+    <h3>Donation Appointments</h3>
+    <button routerLink="/appointments/schedule">Schedule Appointment</button>
+    <button routerLink="/appointments/history">View Past Appointments</button>
+    <button routerLink="/appointments/upcoming">View Upcoming Appointments</button>
+  </div>
+
+  <!-- Blood Requests -->
+  <div class="dashboard-section">
+    <h3>Blood Requests</h3>
+    <button routerLink="/blood-requests/new">Submit a Blood Request</button>
+    <button routerLink="/blood-requests/history">View Request History</button>
+  </div>
+
+  <!-- Community and Notifications -->
+  <div class="dashboard-section">
+    <h3>Community Engagement</h3>
+    <button routerLink="/community-stories">Community Stories</button>
+  </div>
+
+  <!-- Notifications -->
+  <div class="dashboard-section">
+    <h3>Notifications</h3>
+    <button routerLink="/notifications">View Notifications</button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="schedule-appointment-form">
+  <h2>Schedule a Donation Appointment</h2>
+  <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm">
+    <div class="form-group">
+      <label for="donationCenter">Donation Center</label>
+      <select id="donationCenter" [(ngModel)]="appointment.donationCenter" name="donationCenter" required>
+        <option *ngFor="let center of donationCenters" [value]="center">{{ center }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input id="date" type="date" [(ngModel)]="appointment.date" name="date" required />
+    </div>
+    <div class="form-group">
+      <label for="time">Time</label>
+      <input id="time" type="time" [(ngModel)]="appointment.time" name="time" required />
+    </div>
+    <button type="submit" class="submit-btn">Schedule Appointment</button>
+  </form>
+</div>
