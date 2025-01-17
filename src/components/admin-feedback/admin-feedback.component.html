@@ -1,0 +1,35 @@
+<div class="admin-feedback">
+  <h2>Feedback Review</h2>
+
+  <!-- Filters -->
+  <div class="filters">
+    <label for="filter-center">Filter by Donation Center</label>
+    <select id="filter-center" [(ngModel)]="filters.center" (change)="applyFilters()">
+      <option value="">All Centers</option>
+      <option *ngFor="let center of centers" [value]="center.id">
+        {{ center.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Feedback List -->
+  <div class="feedback-list">
+    <div *ngFor="let feedback of filteredFeedback" class="feedback-card">
+      <p><strong>Donor:</strong> {{ feedback.donorName }}</p>
+      <p><strong>Date:</strong> {{ feedback.date | date: 'shortDate' }}</p>
+      <p><strong>Center:</strong> {{ feedback.donationCenter }}</p>
+      <p><strong>Rating:</strong> {{ feedback.rating }} / 5</p>
+      <p><strong>Comments:</strong> {{ feedback.comments }}</p>
+
+      <!-- Admin Response -->
+      <div *ngIf="feedback.response" class="response">
+        <p><strong>Admin Response:</strong> {{ feedback.response }}</p>
+      </div>
+
+      <div *ngIf="!feedback.response" class="response-form">
+        <textarea [(ngModel)]="feedback.newResponse" placeholder="Write your response..."></textarea>
+        <button (click)="submitResponse(feedback)">Submit Response</button>
+      </div>
+    </div>
+  </div>
+</div>

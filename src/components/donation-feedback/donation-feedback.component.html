@@ -1,0 +1,51 @@
+<div class="donation-feedback">
+  <h2>Provide Feedback for Your Donation</h2>
+
+  <form (ngSubmit)="submitFeedback()" #feedbackForm="ngForm">
+    <!-- Select Appointment -->
+    <div class="form-group">
+      <label for="appointment">Select Donation Appointment</label>
+      <select
+        id="appointment"
+        [(ngModel)]="feedback.appointmentId"
+        name="appointmentId"
+        required
+      >
+        <option *ngFor="let appointment of appointments" [value]="appointment.id">
+          {{ appointment.donationCenter }} - {{ appointment.date | date: 'shortDate' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Rating -->
+    <div class="form-group">
+      <label for="rating">Rate Your Experience</label>
+      <select
+        id="rating"
+        [(ngModel)]="feedback.rating"
+        name="rating"
+        required
+      >
+        <option value="1">1 - Poor</option>
+        <option value="2">2 - Fair</option>
+        <option value="3">3 - Good</option>
+        <option value="4">4 - Very Good</option>
+        <option value="5">5 - Excellent</option>
+      </select>
+    </div>
+
+    <!-- Comments -->
+    <div class="form-group">
+      <label for="comments">Additional Comments</label>
+      <textarea
+        id="comments"
+        [(ngModel)]="feedback.comments"
+        name="comments"
+        placeholder="Share your experience..."
+      ></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="submit-btn">Submit Feedback</button>
+  </form>
+</div>

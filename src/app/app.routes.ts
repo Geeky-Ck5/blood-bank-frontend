@@ -240,8 +240,20 @@ export const routes: Routes = [
       ),
   },
 
-
-
+  {
+    path: 'donor/feedback',
+    loadComponent: () =>
+      import('../components/donation-feedback/donation-feedback.component').then(
+        (m) => m.DonationFeedbackComponent
+      ),
+  },
+  {
+    path: 'admin/feedback',
+    loadComponent: () =>
+      import('../components/admin-feedback/admin-feedback.component').then(
+        (m) => m.AdminFeedbackComponent
+      ),
+  },
 
   { path: '**', redirectTo: '' },
 ];

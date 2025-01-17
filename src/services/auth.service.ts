@@ -79,4 +79,12 @@ export class AuthService {
   savePreferredCenter(centerId: number): Observable<any> {
     return this.updateProfile({ preferredCenter: centerId });
   }
+
+  /**
+   * Enable or disable auto-reminders for eligibility.
+   * @param autoReminders - Whether auto-reminders should be enabled (true) or disabled (false).
+   */
+  updateAutoReminders(autoReminders: boolean): Observable<any> {
+    return this.updateProfile({ autoReminders });
+  }
 }

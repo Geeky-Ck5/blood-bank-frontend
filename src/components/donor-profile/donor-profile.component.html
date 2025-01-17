@@ -39,9 +39,16 @@
         </option>
       </select>
     </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="checkbox"
+          [(ngModel)]="profile.autoReminders"
+          name="autoReminders"
+        />
+        Enable Auto-Reminders for Eligibility
+      </label>
+    </div>
     <button type="submit" class="submit-btn">Save Profile</button>
-
-
-    <button type="submit" class="save-btn">Save Changes</button>
   </form>
 </div>

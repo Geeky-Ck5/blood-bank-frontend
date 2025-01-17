@@ -18,6 +18,7 @@ export class DonorProfileComponent implements OnInit {
     last_name: '',
     email: '',
     bloodGroup: '',
+    autoReminders: false,
   };
   centers: any[] = [];
 
@@ -28,6 +29,10 @@ export class DonorProfileComponent implements OnInit {
     this.authService.getProfile().subscribe({
       next: (data) => {
         this.profile = data; // Populate profile data
+        if (this.profile.autoReminders === undefined) {
+          // Ensure autoReminders has a default value if undefined
+          this.profile.autoReminders = false;
+        }
       },
       error: (err) => {
         console.error('Error fetching profile:', err);
