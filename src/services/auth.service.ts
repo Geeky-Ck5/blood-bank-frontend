@@ -70,4 +70,8 @@ export class AuthService {
   updateRecipientProfile(profileData: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/auth/recipient/profile`, profileData);
   }
+
+  getEligibilityReminders(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/donor/eligibility`);
+  }
 }

@@ -10,11 +10,15 @@ export class NotificationsService {
 
   constructor(private http: HttpClient) {}
 
-  getRecipientNotifications(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/recipient`);
+  getNotifications(role: 'donor' | 'recipient'): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${role}`);
   }
 
   markNotificationAsRead(notificationId: number): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/mark-as-read/${notificationId}`, {});
+  }
+
+  getEligibilityReminders(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/donor/eligibility`);
   }
 }

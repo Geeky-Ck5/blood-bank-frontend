@@ -40,11 +40,6 @@ export const routes: Routes = [
       import('../components/donor-dashboard/donor-dashboard.component').then((m) => m.DonorDashboardComponent),
   },
 
-/*  {
-    path: 'profile',
-    loadComponent: () =>
-      import('../components/donor-profile/donor-profile.component').then((m) => m.DonorProfileComponent),
-  },*/
   {
     path: 'change-password',
     loadComponent: () =>
@@ -172,13 +167,21 @@ export const routes: Routes = [
   },
 
   {
+    path: 'donor/notifications',
+    loadComponent: () =>
+      import('../components/recipient-notifications/recipient-notifications.component').then(
+        (m) => m.RecipientNotificationsComponent
+      ),
+    data: { role: 'donor' },
+  },
+  {
     path: 'recipient/notifications',
     loadComponent: () =>
       import('../components/recipient-notifications/recipient-notifications.component').then(
         (m) => m.RecipientNotificationsComponent
       ),
+    data: { role: 'recipient' },
   },
-
   {
     path: 'donor/blood-request/new',
     loadComponent: () =>

@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AppointmentService } from '../../services/appointment.service';
 import { FeedbackService } from '../../services/feedback.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-donor-feedback',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    DatePipe
   ],
   templateUrl: './donor-feedback.component.html',
   styleUrl: './donor-feedback.component.scss'
