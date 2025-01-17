@@ -19,6 +19,8 @@ export class DonorProfileComponent implements OnInit {
     email: '',
     bloodGroup: '',
     autoReminders: false,
+    nationalId: '',
+    gender: '',
   };
   centers: any[] = [];
 
@@ -52,7 +54,17 @@ export class DonorProfileComponent implements OnInit {
     });
   }
 
+  isValidNationalId(): boolean {
+    const nationalIdRegex = /^[A-Za-z][0-9]{6}$/;
+    return nationalIdRegex.test(this.profile.nationalId) && this.profile.nationalId.length === 14;
+  }
+
   onSubmit() {
+
+    if (!this.isValidNationalId()) {
+      alert('Please enter a valid National Identity Card.');
+      return;
+    }
     // Submit updated profile details
     this.authService.updateProfile(this.profile).subscribe({
       next: (response) => {

@@ -20,12 +20,21 @@
       font-weight: bold;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 0.8rem;
       font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    small {
+      color: red;
+      font-size: 0.8rem;
+      display: block;
+      margin-top: 0.3rem;
     }
   }
 

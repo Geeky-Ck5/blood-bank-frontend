@@ -16,7 +16,10 @@ export class UserProfileComponent {
     last_name: '',
     email: '', // Pre-filled after signup
     role: 'donor',
-    bloodGroup: '',// Default value
+    bloodGroup: '',
+    nationalId: '',
+    gender: '',
+
   };
 
   contactInfo = {
@@ -28,9 +31,18 @@ export class UserProfileComponent {
     country: '',
   };
 
+  isValidNationalId(): boolean {
+    const nationalIdRegex = /^[A-Za-z][0-9]{6}$/;
+    return nationalIdRegex.test(this.user.nationalId) && this.user.nationalId.length === 14;
+  }
+
   constructor(private authService: AuthService) {}
 
   onSubmit() {
+    if (!this.isValidNationalId()) {
+      alert('Please enter a valid National Identity Card.');
+      return;
+    }
     const profileData = { ...this.user, ...this.contactInfo };
 
     // Call the backend to save the data
