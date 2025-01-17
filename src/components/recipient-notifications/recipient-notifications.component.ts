@@ -4,6 +4,7 @@ import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-recipient-notifications',
+  standalone: true,
   imports: [
     DatePipe
   ],

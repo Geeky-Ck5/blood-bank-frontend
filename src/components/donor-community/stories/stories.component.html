@@ -1,0 +1,19 @@
+<div class="community-stories">
+  <h2>Community Stories</h2>
+  <div *ngIf="stories.length === 0" class="no-stories">
+    <p>No stories found. Be the first to share your story!</p>
+  </div>
+  <div *ngFor="let story of stories" class="story-card">
+    <h3>{{ story.title }}</h3>
+    <p>{{ story.content }}</p>
+    <p><strong>By:</strong> {{ story.author }}</p>
+  </div>
+  <div class="share-story">
+    <h3>Share Your Story</h3>
+    <form (ngSubmit)="onShareStory()" #storyForm="ngForm">
+      <input [(ngModel)]="newStory.title" name="title" placeholder="Story Title" required />
+      <textarea [(ngModel)]="newStory.content" name="content" placeholder="Your Story" required></textarea>
+      <button type="submit">Share</button>
+    </form>
+  </div>
+</div>

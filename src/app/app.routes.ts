@@ -179,5 +179,33 @@ export const routes: Routes = [
       ),
   },
 
+  {
+    path: 'donor/blood-request/new',
+    loadComponent: () =>
+      import('../components/donor-blood-request/new/new.component').then(
+        (m) => m.NewComponent
+      ),
+  },
+
+
+  {
+    path: 'donor/blood-request/history',
+    loadComponent: () =>
+      import('../components/donor-blood-request/history/history.component').then(
+        (m) => m.HistoryComponent
+      ),
+  },
+
+  {
+    path: 'donor/community/stories',
+    loadComponent: () =>
+      import('../components/donor-community/stories/stories.component').then(
+        (m) => m.StoriesComponent
+      ),
+  },
+
+
+
+
   { path: '**', redirectTo: '' },
 ];
