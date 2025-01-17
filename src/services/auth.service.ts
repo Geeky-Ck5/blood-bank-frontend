@@ -74,4 +74,9 @@ export class AuthService {
   getEligibilityReminders(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/donor/eligibility`);
   }
+
+
+  savePreferredCenter(centerId: number): Observable<any> {
+    return this.updateProfile({ preferredCenter: centerId });
+  }
 }

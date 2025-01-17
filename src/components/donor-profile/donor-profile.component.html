@@ -26,6 +26,22 @@
         <option value="O-">O-</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="preferredCenter">Preferred Blood Donation Center</label>
+      <select
+        id="preferredCenter"
+        [(ngModel)]="profile.preferredCenter"
+        name="preferredCenter"
+        required
+      >
+        <option *ngFor="let center of centers" [value]="center.id">
+          {{ center.name }} - {{ center.location }}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="submit-btn">Save Profile</button>
+
+
     <button type="submit" class="save-btn">Save Changes</button>
   </form>
 </div>

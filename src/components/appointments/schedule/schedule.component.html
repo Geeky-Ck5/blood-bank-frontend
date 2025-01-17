@@ -3,7 +3,7 @@
   <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm">
     <div class="form-group">
       <label for="donationCenter">Donation Center</label>
-      <select id="donationCenter" [(ngModel)]="appointment.donationCenter" name="donationCenter" required>
+      <select [(ngModel)]="appointment.donationCenter" name="donationCenter" required>
         <option *ngFor="let center of donationCenters" [value]="center">{{ center }}</option>
       </select>
     </div>
@@ -14,6 +14,32 @@
     <div class="form-group">
       <label for="time">Time</label>
       <input id="time" type="time" [(ngModel)]="appointment.time" name="time" required />
+    </div>
+    <div class="form-group">
+      <label for="donationCenter">Select Blood Donation Center</label>
+      <select
+        id="donationCenter"
+        [(ngModel)]="appointment.centerId"
+        name="centerId"
+        required
+      >
+        <option
+          *ngFor="let center of centers"
+          [value]="center.id"
+          [selected]="center.id === preferredCenterId"
+        >
+          {{ center.name }} - {{ center.location }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="checkbox"
+          [(ngModel)]="saveAsPreferred"
+        />
+        Save this center as my preferred donation center
+      </label>
     </div>
     <button type="submit" class="submit-btn">Schedule Appointment</button>
   </form>

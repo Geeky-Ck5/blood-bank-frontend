@@ -224,6 +224,13 @@ export const routes: Routes = [
       ),
   },
 
+  {
+    path: 'donor/events',
+    loadComponent: () =>
+      import('../components/donor-events/donor-events.component').then(
+        (m) => m.DonorEventsComponent
+      ),
+  },
 
 
   { path: '**', redirectTo: '' },

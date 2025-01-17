@@ -1,0 +1,28 @@
+<div class="events">
+  <h2>Nearby Blood Donation Events</h2>
+  <div class="map-container">
+    <google-map
+      height="400px"
+      width="100%"
+      [center]="center"
+      [zoom]="zoom"
+    >
+      <map-marker
+        *ngFor="let event of events"
+        [position]="{ lat: event.latitude, lng: event.longitude }"
+        [label]="event.name"
+        [title]="event.description"
+        (mapClick)="onMarkerClick(event)"
+      ></map-marker>
+    </google-map>
+  </div>
+
+  <div class="event-details" *ngIf="selectedEvent">
+    <h3>{{ selectedEvent.name }}</h3>
+    <p><strong>Date:</strong> {{ selectedEvent.date | date: 'fullDate' }}</p>
+    <p><strong>Time:</strong> {{ selectedEvent.time }}</p>
+    <p><strong>Address:</strong> {{ selectedEvent.address }}</p>
+    <p>{{ selectedEvent.description }}</p>
+    <button (click)="onRegister(selectedEvent.id)">Register</button>
+  </div>
+</div>
