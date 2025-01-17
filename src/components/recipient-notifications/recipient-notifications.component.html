@@ -1,0 +1,15 @@
+<div class="notifications">
+  <h2>Notifications</h2>
+  <div *ngIf="notifications.length === 0" class="no-notifications">
+    <p>You have no notifications.</p>
+  </div>
+  <div *ngFor="let notification of notifications" class="notification-card">
+    <p class="message">{{ notification.message }}</p>
+    <p class="timestamp">{{ notification.timestamp | date: 'short' }}</p>
+    <div class="actions">
+      <button *ngIf="!notification.isRead" (click)="markAsRead(notification.id)">
+        Mark as Read
+      </button>
+    </div>
+  </div>
+</div>

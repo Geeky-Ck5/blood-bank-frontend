@@ -171,10 +171,13 @@ export const routes: Routes = [
       ),
   },
 
-
-
-
-
+  {
+    path: 'recipient/notifications',
+    loadComponent: () =>
+      import('../components/recipient-notifications/recipient-notifications.component').then(
+        (m) => m.RecipientNotificationsComponent
+      ),
+  },
 
   { path: '**', redirectTo: '' },
 ];
