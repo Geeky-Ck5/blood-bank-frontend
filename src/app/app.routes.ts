@@ -197,13 +197,29 @@ export const routes: Routes = [
   },
 
   {
+    path: 'recipient/community/stories',
+    loadComponent: () =>
+      import('../components/donor-community/stories/stories.component').then(
+        (m) => m.StoriesComponent
+      ),
+    data: { role: 'recipient' },
+  },
+  {
     path: 'donor/community/stories',
     loadComponent: () =>
       import('../components/donor-community/stories/stories.component').then(
         (m) => m.StoriesComponent
       ),
+    data: { role: 'donor' },
   },
 
+  {
+    path: 'donor/feedback',
+    loadComponent: () =>
+      import('../components/donor-feedback/donor-feedback.component').then(
+        (m) => m.DonorFeedbackComponent
+      ),
+  },
 
 
 

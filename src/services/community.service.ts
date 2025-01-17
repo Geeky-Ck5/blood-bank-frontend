@@ -10,11 +10,11 @@ export class CommunityService {
 
   constructor(private http: HttpClient) {}
 
-  getCommunityStories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/stories`);
+  getCommunityStories(role: 'donor' | 'recipient'): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/stories/${role}`);
   }
 
-  shareCommunityStory(storyData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/stories`, storyData);
+  shareCommunityStory(role: 'donor' | 'recipient', storyData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/stories/${role}`, storyData);
   }
 }

@@ -29,6 +29,8 @@ export class AppointmentService {
   scheduleRecipientAppointment(appointmentData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/schedule`, appointmentData);
   }
-
+  getCompletedAppointments(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/appointments/completed`);
+  }
 
 }
