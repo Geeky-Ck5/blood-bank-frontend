@@ -1,0 +1,25 @@
+<div class="blood-inventory">
+  <h2>Blood Inventory Levels</h2>
+
+  <!-- Inventory Table -->
+  <table>
+    <thead>
+    <tr>
+      <th>Blood Type</th>
+      <th>Available Units</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let blood of bloodInventory">
+      <td>{{ blood.type }}</td>
+      <td>{{ blood.units }}</td>
+      <td>
+          <span [ngClass]="getStatusClass(blood.units)">
+            {{ getStatusText(blood.units) }}
+          </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

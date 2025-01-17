@@ -1,0 +1,44 @@
+.blood-inventory {
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.8rem;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+
+    td {
+      text-align: center;
+    }
+  }
+
+  .low-stock {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+
+  .sufficient-stock {
+    color: #2ecc71;
+    font-weight: bold;
+  }
+
+  .critical-stock {
+    color: #f39c12;
+    font-weight: bold;
+  }
+}

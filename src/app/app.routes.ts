@@ -232,6 +232,16 @@ export const routes: Routes = [
       ),
   },
 
+  {
+    path: 'donor/blood-inventory',
+    loadComponent: () =>
+      import('../components/blood-inventory/blood-inventory.component').then(
+        (m) => m.BloodInventoryComponent
+      ),
+  },
+
+
+
 
   { path: '**', redirectTo: '' },
 ];
