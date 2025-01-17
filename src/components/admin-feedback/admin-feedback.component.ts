@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
 import { FeedbackService } from '../../services/feedback.service';
 import { CentersService } from '../../services/centers.service';
 
@@ -8,7 +8,8 @@ import { CentersService } from '../../services/centers.service';
   selector: 'app-admin-feedback',
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   templateUrl: './admin-feedback.component.html',
   styleUrl: './admin-feedback.component.scss'

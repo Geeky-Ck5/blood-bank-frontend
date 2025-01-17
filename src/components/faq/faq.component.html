@@ -1,0 +1,14 @@
+<div class="faq-page">
+  <h1>Frequently Asked Questions</h1>
+  <div class="faq-grid">
+    <div class="faq-card" *ngFor="let faq of faqs" (click)="toggleAnswer(faq)">
+      <div class="faq-question">
+        <p>{{ faq.question }}</p>
+        <span>{{ faq.isExpanded ? '−' : '+' }}</span>
+      </div>
+      <div class="faq-answer" *ngIf="faq.isExpanded">
+        <p>{{ faq.answer }}</p>
+      </div>
+    </div>
+  </div>
+</div>

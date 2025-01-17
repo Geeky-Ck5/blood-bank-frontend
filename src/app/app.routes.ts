@@ -255,5 +255,11 @@ export const routes: Routes = [
       ),
   },
 
+  {
+    path: 'faq',
+    loadComponent: () =>
+      import('../components/faq/faq.component').then((m) => m.FaqComponent),
+  },
+
   { path: '**', redirectTo: '' },
 ];

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BloodInventoryService } from '../../services/blood-inventory.service';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-blood-inventory',
   standalone: true,
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './blood-inventory.component.html',
   styleUrl: './blood-inventory.component.scss'
 })

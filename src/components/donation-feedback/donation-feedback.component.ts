@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
 import { AppointmentService } from '../../services/appointment.service';
 import { FeedbackService } from '../../services/feedback.service';
 
@@ -9,7 +9,8 @@ import { FeedbackService } from '../../services/feedback.service';
   standalone: true,
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   templateUrl: './donation-feedback.component.html',
   styleUrl: './donation-feedback.component.scss'
