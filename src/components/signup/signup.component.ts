@@ -18,6 +18,7 @@ export class SignupComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  role: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -27,17 +28,23 @@ export class SignupComponent {
       return;
     }
 
+    if (!this.role) {
+      alert('Please select a role (Donor or Recipient).');
+      return;
+    }
+
     const userData = {
       username: this.username,
       email: this.email,
       password: this.password,
+      role: this.role
     };
 
     this.authService.signup(userData).subscribe({
       next: (response: string) => {
         console.log('Signup successful:', response);
         alert(response); // Display the plain text message
-        this.router.navigate(['/login']);
+        window.location.href = '/';
       },
       error: (err) => {
         console.error('Signup failed:', err);

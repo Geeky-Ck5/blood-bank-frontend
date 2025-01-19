@@ -83,6 +83,17 @@
       </div>
     </div>
 
+
+    <!-- Role Selection -->
+    <div class="form-group">
+      <label for="role">Register as:</label>
+      <select id="role" name="role" required [(ngModel)]="role">
+        <option value="" disabled>Select your role</option>
+        <option value="donor">Donor</option>
+        <option value="recipient">Recipient</option>
+      </select>
+    </div>
+
     <!-- Submit Button -->
     <button
       type="submit"

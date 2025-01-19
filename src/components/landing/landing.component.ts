@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    FormsModule
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
@@ -15,18 +18,36 @@ export class LandingComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    this.authService.login(this.email, this.password).subscribe({
+    const credentials = {
+      email: this.email,
+      password: this.password,
+    };
+
+    this.authService.login(credentials).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
-        this.authService.saveToken(response.token); // Save token to localStorage
-        // Redirect to the dashboard or another page
+
+        // Store the token if needed
+        localStorage.setItem('token', response.token);
+
+        // Redirect based on role
+        const role = response.role;
+        if (role === 'donor') {
+          window.location.href = '/donor-profile';
+        } else if (role === 'recipient') {
+                   window.location.href = '/recipient-profile';
+        } else if (role === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          console.error('Unknown role:', role);
+        }
       },
       error: (err) => {
         console.error('Login failed:', err);
-        // Display error message to the user
+        alert('Invalid credentials. Please try again.');
       },
     });
   }

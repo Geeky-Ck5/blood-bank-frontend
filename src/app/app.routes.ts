@@ -13,6 +13,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../components/signup/signup.component').then((m) => m.SignupComponent), // Sign-Up
   },
+  { path: 'donor-profile', loadComponent: () => import('../components/donor-profile/donor-profile.component').then(m => m.DonorProfileComponent) },
+
   {
     path: 'auth',
     children: [
