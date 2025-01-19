@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root', // Makes this service available application-wide
 })
 export class AuthService {
-  private baseUrl = 'http://your-backend-api.com/api/auth'; // Replace with your backend URL
+  private baseUrl = '/api'; // Replace with your backend URL
 
   constructor(private http: HttpClient) {}
 
@@ -16,8 +16,10 @@ export class AuthService {
   }
 
   // Signup method
-  signup(userData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signup`, userData);
+  signup(userData: { email: string; password: string }): Observable<any> {
+    return this.http.post<string>(`${this.baseUrl}/signup`, userData, {
+      responseType: 'text' as 'json', // Interpret plain text as JSON
+    });
   }
 
   // Forgot password method

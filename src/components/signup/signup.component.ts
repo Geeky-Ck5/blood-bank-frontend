@@ -1,37 +1,47 @@
 import { Component } from '@angular/core';
-import {RouterLink, } from '@angular/router';
+import {FormsModule, NgForm} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import {RouterLink, Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterLink],
+  imports: [
+    FormsModule,
+    RouterLink
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
-  firstName: string = '';
-  lastName: string = '';
+  username: string = '';
   email: string = '';
   password: string = '';
+  confirmPassword: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
+    if (this.password !== this.confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
     const userData = {
-      firstName: this.firstName,
-      lastName: this.lastName,
+      username: this.username,
       email: this.email,
       password: this.password,
     };
+
     this.authService.signup(userData).subscribe({
-      next: (response) => {
+      next: (response: string) => {
         console.log('Signup successful:', response);
-        // Redirect to email verification or login page
+        alert(response); // Display the plain text message
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Signup failed:', err);
-        // Display error message to the user
+        alert('Signup failed. Please try again later.');
       },
     });
   }
