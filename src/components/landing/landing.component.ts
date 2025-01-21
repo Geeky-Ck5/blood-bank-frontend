@@ -32,6 +32,10 @@ export class LandingComponent {
 
         // Store the token if needed
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('role', response.role);
+        localStorage.setItem('email', response.email);
+
 
         // Redirect based on role
         const role = response.role;

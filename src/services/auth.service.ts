@@ -55,9 +55,10 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/profile`);
   }
 
-  updateProfile(profileData: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/profile`, profileData);
+  updateProfile(profile: any): Observable<any> {
+    return this.http.put('/api/profile', profile); // Adjust the endpoint if necessary
   }
+
   changePassword(passwordData: { currentPassword: string; newPassword: string }): Observable<any> {
     return this.http.put(`${this.baseUrl}/change-password`, passwordData);
   }
