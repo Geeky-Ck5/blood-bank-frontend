@@ -1,24 +1,19 @@
 <!-- Blood Inventory Summary -->
 <div class="blood-inventory">
-  <h3>Blood Inventory Summary</h3>
-  <table>
-    <thead>
-    <tr>
-      <th>Blood Group</th>
-      <th>Units Available</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of bloodInventory">
-      <td>{{ item.bloodGroup }}</td>
-      <td>{{ item.unitsAvailable }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <h2>Blood Inventory Summary</h2>
+  <div class="summary-section">
+    <h3>Blood Group Units Available</h3>
+    <div class="summary-card">
+      <div class="card" *ngFor="let item of bloodInventory">
+        <div class="blood-group">{{ item.bloodGroup }}</div>
+        <div class="units">{{ item.unitsAvailable }}</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Expiry Alerts -->
-<div class="expiry-alerts">
+<div class="expiry-alerts-section">
   <h3>Expiry Alerts</h3>
   <table>
     <thead>
