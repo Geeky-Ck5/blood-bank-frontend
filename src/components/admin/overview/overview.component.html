@@ -1,1 +1,31 @@
-<p>overview works!</p>
+<div class="dashboard">
+  <!-- Dashboard Stats -->
+  <div class="stat-card" *ngFor="let stat of statsArray">
+    <div class="icon" [ngStyle]="{ 'background-color': stat.color }">
+      <fa-icon [icon]="stat.icon"></fa-icon>
+    </div>
+    <div class="details">
+      <h4>{{ stat.title }}</h4>
+      <p class="value">{{ stat.value }}</p>
+    </div>
+  </div>
+
+  <!-- Blood Inventory Summary -->
+  <div class="blood-inventory">
+    <h3>Blood Inventory Summary</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Blood Group</th>
+        <th>Units Available</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of bloodInventory">
+        <td>{{ item.bloodGroup }}</td>
+        <td>{{ item.unitsAvailable }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

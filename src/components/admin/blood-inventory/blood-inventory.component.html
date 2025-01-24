@@ -1,1 +1,39 @@
-<p>blood-inventory works!</p>
+<!-- Blood Inventory Summary -->
+<div class="blood-inventory">
+  <h3>Blood Inventory Summary</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Blood Group</th>
+      <th>Units Available</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of bloodInventory">
+      <td>{{ item.bloodGroup }}</td>
+      <td>{{ item.unitsAvailable }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Expiry Alerts -->
+<div class="expiry-alerts">
+  <h3>Expiry Alerts</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Blood Group</th>
+      <th>Expiry Date</th>
+      <th>Units Expiring Soon</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let alert of expiryAlerts">
+      <td>{{ alert.bloodGroup }}</td>
+      <td>{{ alert.expiryDate | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ alert.unitsExpiringSoon }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
