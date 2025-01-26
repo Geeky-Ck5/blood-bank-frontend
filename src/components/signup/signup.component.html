@@ -106,3 +106,12 @@
 
   <p>Already Registered? <a routerLink="/login">Login</a></p>
 </div>
+
+
+<!-- Token Modal -->
+<app-token-modal
+  *ngIf="showModal"
+  [email]="email"
+  (validationSuccess)="onTokenValidationSuccess()"
+  (validationFailure)="onTokenValidationFailure($event)"
+></app-token-modal>

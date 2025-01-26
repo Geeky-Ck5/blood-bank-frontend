@@ -1,0 +1,22 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h2>Enter Token</h2>
+    <p>A token has been sent to your email. Please enter it below.</p>
+
+    <input
+      type="text"
+      [(ngModel)]="token"
+      maxlength="4"
+      placeholder="Enter 4-digit token"
+    />
+
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <p>Token expires in: {{ countdown }} seconds</p>
+
+    <div class="button-group">
+      <button (click)="validateToken()">Validate Token</button>
+      <button (click)="regenerateToken()">Resend Token</button>
+    </div>
+  </div>
+</div>

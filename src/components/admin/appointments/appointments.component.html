@@ -1,1 +1,42 @@
-<p>appointments works!</p>
+<div class="appointments">
+  <h2>Appointments Management</h2>
+
+  <div *ngIf="loading" class="loading">Loading appointments...</div>
+
+  <table *ngIf="!loading" class="appointments-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>User ID</th>
+      <th>Center</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let appointment of appointments">
+      <td>{{ appointment.appointmentId }}</td>
+      <td>{{ appointment.userId }}</td>
+      <td>{{ appointment.centerName }}</td>
+      <td>{{ appointment.date }}</td>
+      <td>{{ appointment.time }}</td>
+      <td>{{ appointment.status }}</td>
+      <td>
+        <!-- Only show buttons for statuses other than 'Completed' -->
+        <button
+          *ngIf="appointment.status !== 'completed' && appointment.status !== 'scheduled'"
+          (click)="updateStatus(appointment, 'scheduled')">
+          Set Scheduled
+        </button>
+        <button
+          *ngIf="appointment.status !== 'completed' && appointment.status !== 'canceled'"
+          (click)="updateStatus(appointment, 'canceled')">
+          Set Canceled
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
