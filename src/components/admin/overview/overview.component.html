@@ -9,7 +9,7 @@
       <p class="value">{{ stat.value }}</p>
     </div>
   </div>
-
+</div>
   <!-- Blood Inventory Summary -->
   <div class="blood-inventory">
     <h3>Blood Inventory Summary</h3>
@@ -21,11 +21,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of bloodInventory">
-        <td>{{ item.bloodGroup }}</td>
-        <td>{{ item.unitsAvailable }}</td>
+      <tr *ngFor="let blood of bloodInventory">
+        <td>{{ blood.bloodGroup }}</td>
+        <td>{{ blood.unitsAvailable }}</td>
       </tr>
       </tbody>
     </table>
   </div>
-</div>
+

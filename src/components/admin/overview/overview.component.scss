@@ -42,24 +42,24 @@
     }
   }
 
-  .blood-inventory {
-    grid-column: span 2;
-    margin-top: 2rem;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+.blood-inventory {
+  grid-column: span 2;
+  margin-top: 2rem;
 
-      th, td {
-        border: 1px solid #ddd;
-        padding: 0.8rem;
-        text-align: left;
-      }
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-      th {
-        background-color: #f5f5f5;
-      }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.8rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f5f5f5;
     }
   }
 }
-

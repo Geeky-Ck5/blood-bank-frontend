@@ -8,14 +8,14 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 @Component({
   selector: 'app-overview',
   standalone: true,
-    imports: [
-      RouterLink,
-      RouterOutlet,
-      RouterLinkActive,
-      NgStyle,
-      FaIconComponent,
-      NgForOf
-    ],
+  imports: [
+    RouterLink,
+    RouterOutlet,
+    RouterLinkActive,
+    NgStyle,
+    FaIconComponent,
+    NgForOf
+  ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
