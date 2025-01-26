@@ -21,6 +21,7 @@ export class TokenModalComponent implements OnInit {
   token = '';
   countdown = 300; // Countdown timer (5 minutes)
   errorMessage = '';
+  isTokenExpired = false;
   interval: any;
 
   private timer: any;
@@ -45,6 +46,11 @@ export class TokenModalComponent implements OnInit {
 
 
   validateToken() {
+    if (this.countdown <= 0) {
+      this.errorMessage = 'Token has expired. Please regenerate a new one.';
+      return;
+    }
+
     this.authService
       .validateToken({ email: this.email, token: this.token })
       .subscribe({
@@ -63,6 +69,7 @@ export class TokenModalComponent implements OnInit {
       next: () => {
         this.errorMessage = 'A new token has been sent to your email.';
         this.countdown = 300; // Reset countdown
+        this.isTokenExpired = false; // Reset token expiry status
         this.startCountdown();
       },
       error: (err) => {
@@ -78,10 +85,12 @@ export class TokenModalComponent implements OnInit {
         this.countdown--;
       } else {
         clearInterval(this.interval);
-        this.validationFailure.emit('Token has expired. Please regenerate.');
+        this.errorMessage = 'Token has expired. Please regenerate a new one.';
+        this.validationFailure.emit('Token expired.');
       }
     }, 1000);
   }
+
 
   ngOnDestroy(): void {
     clearInterval(this.timer); // Clean up timer on component destroy

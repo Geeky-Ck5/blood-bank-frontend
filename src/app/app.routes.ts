@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {NewComponent} from '../components/recipient-blood-request/new/new.component';
 import {HistoryComponent} from '../components/recipient-blood-request/history/history.component';
+import {ValidateTokenComponent} from '../components/validate-token/validate-token.component';
 
 export const routes: Routes = [
   {
@@ -268,6 +269,16 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../components/contact-us/contact-us.component').then(
         (m) => m.ContactUsComponent
+      ),
+  },
+
+  { path: 'validate-token', component: ValidateTokenComponent },
+
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('../components/reset-password-component/reset-password-component.component').then(
+        (m) => m.ResetPasswordComponentComponent
       ),
   },
 

@@ -1,22 +1,28 @@
-<div class="modal-overlay">
-  <div class="modal-content">
+<div class="token-modal-backdrop">
+  <div class="token-modal">
     <h2>Enter Token</h2>
     <p>A token has been sent to your email. Please enter it below.</p>
 
     <input
       type="text"
       [(ngModel)]="token"
-      maxlength="4"
+      class="form-control"
       placeholder="Enter 4-digit token"
+      [disabled]="countdown <= 0"
     />
 
-    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <button
+      class="validate-btn"
+      (click)="validateToken()"
+      [disabled]="countdown <= 0 || !token"
+    >
+      Validate Token
+    </button>
 
-    <p>Token expires in: {{ countdown }} seconds</p>
+    <p class="countdown">Token expires in: {{ countdown }} seconds</p>
 
-    <div class="button-group">
-      <button (click)="validateToken()">Validate Token</button>
-      <button (click)="regenerateToken()">Resend Token</button>
-    </div>
+    <button class="resend-btn" (click)="regenerateToken()">Resend Token</button>
+
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 </div>

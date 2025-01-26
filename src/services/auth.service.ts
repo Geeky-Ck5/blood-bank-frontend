@@ -22,7 +22,6 @@ export class AuthService {
     });
   }
 
-  // Forgot password method
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/forgot-password`, { email });
   }
@@ -33,12 +32,13 @@ export class AuthService {
       responseType: 'text',
     }) as Observable<string>;
   }
-  validateToken(payload: { email: string; token: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/validate-token`, payload);
+
+  validateToken(tokenData: { email: string; token: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/validate-token`, tokenData);
   }
 
-  regenerateToken(payload: { email: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/regenerate-token`, payload);
+  regenerateToken(emailData: { email: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/regenerate-token`, emailData);
   }
 
   // Store the token
@@ -105,4 +105,18 @@ export class AuthService {
   updateAutoReminders(autoReminders: boolean): Observable<any> {
     return this.updateProfile({ autoReminders });
   }
+
+  resetPassword(data: { email: string; token: number; newPassword: string }): Observable<string> {
+    return this.http.post(`${this.baseUrl}/reset-password`, data, { responseType: 'text' });
+  }
+
+
+  resetFailedLogin(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/reset-failed-login`, { email });
+  }
+
+  sendResetPasswordToken(data: { email: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/forgot-password`, data);
+  }
+
 }
