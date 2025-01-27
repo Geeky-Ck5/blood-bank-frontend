@@ -119,4 +119,12 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/forgot-password`, data);
   }
 
+  getUserId(): number | null {
+    return Number(localStorage.getItem('userId')) || null;
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('role') || null;
+  }
+
 }
