@@ -48,14 +48,25 @@ export class LandingComponent {
 
           // Redirect based on role
           const role = response.role;
-          if (role === 'donor') {
-            window.location.href = '/donor-profile';
-          } else if (role === 'recipient') {
-            window.location.href = '/recipient-profile';
-          } else if (role === 'admin') {
-            window.location.href = '/admin';
+          if (response.firstname) {
+            // Redirect to respective dashboards
+            if (response.role === 'donor') {
+              window.location.href = '/donor-dashboard';
+            } else if (response.role === 'recipient') {
+              window.location.href = '/recipient-dashboard';
+
+            } else if (response.role === 'admin') {
+              this.router.navigate(['/admin']);
+            } else {
+              console.error('Unknown role:', response.role);
+            }
           } else {
-            console.error('Unknown role:', role);
+            // Redirect to profile update based on role
+            if (response.role === 'donor') {
+              window.location.href = '/donor-profile';
+            } else if (response.role === 'recipient') {
+              window.location.href = '/recipient-profile';
+            }
           }
         },
         error: (err) => {

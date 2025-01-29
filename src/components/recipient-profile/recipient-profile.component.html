@@ -1,35 +1,49 @@
 <div class="recipient-profile">
-  <h2>Recipient Profile</h2>
+  <h2>Update Profile</h2>
   <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <!-- First Name -->
     <div class="form-group">
       <label for="firstName">First Name</label>
-      <input
-        id="firstName"
-        type="text"
-        [(ngModel)]="profile.first_name"
-        name="first_name"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input
-        id="lastName"
-        type="text"
-        [(ngModel)]="profile.last_name"
-        name="last_name"
-        required
-      />
+      <input id="firstName" type="text" [(ngModel)]="profile.firstname" name="first_name" required />
     </div>
 
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" type="text" [(ngModel)]="profile.lastname" name="last_name" required />
+    </div>
+
+    <!-- National Identity Card -->
+    <div class="form-group">
+      <label for="nationalId">National Identity Card</label>
+      <input
+        type="text"
+        id="nationalId"
+        name="nationalId"
+        [(ngModel)]="profile.national_Id"
+        required
+        pattern="[A-Za-z][0-9]{6}"
+        maxlength="14"
+        placeholder="Enter your National ID"
+      />
+      <small *ngIf="!isValidNationalId()">Must start with a letter and be 14 characters long.</small>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" [(ngModel)]="profile.gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <!-- Blood Group -->
     <div class="form-group">
       <label for="bloodGroup">Blood Group</label>
-      <select
-        id="bloodGroup"
-        [(ngModel)]="profile.bloodGroup"
-        name="bloodGroup"
-        required
-      >
+      <select id="bloodGroup" [(ngModel)]="profile.blood_Group" name="bloodGroup" required>
         <option value="A+">A+</option>
         <option value="A-">A-</option>
         <option value="B+">B+</option>
@@ -41,7 +55,7 @@
       </select>
     </div>
 
-
+    <!-- Preferred Donation Center -->
     <div class="form-group">
       <label for="preferred-center">Preferred Donation Center:</label>
       <select
@@ -56,7 +70,105 @@
       </select>
     </div>
 
+    <!-- Auto Reminders -->
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="profile.autoReminders" name="autoReminders" />
+        Enable Auto-Reminders for Eligibility
+      </label>
+    </div>
 
-    <button type="submit" class="save-btn">Save Changes</button>
+    <!-- Contact Information -->
+    <fieldset>
+      <legend>Contact Information</legend>
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input
+          id="mobileNumber"
+          type="text"
+          [(ngModel)]="contactInfo.mobile_number"
+          name="mobile_number"
+          required
+          pattern="[0-9]{8}"
+          maxlength="8"
+        />
+        <small *ngIf="!isValidMobileNumber()">Must be an 8-digit number.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="mobileOperator">Mobile Operator</label>
+        <select
+          id="mobileOperator"
+          [(ngModel)]="contactInfo.mobile_operator"
+          name="mobile_operator"
+          required
+        >
+          <option value="" disabled>Select Mobile Operator</option>
+          <option value="EMTEL">EMTEL</option>
+          <option value="MYTMU">MYTMU</option>
+          <option value="CHILLI">CHILLI</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="streetAddress">Street Address</label>
+        <input
+          id="streetAddress"
+          type="text"
+          [(ngModel)]="contactInfo.street_address"
+          name="street_address"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="addressLine1">Address Line 1</label>
+        <input
+          id="addressLine1"
+          type="text"
+          [(ngModel)]="contactInfo.address_line_1"
+          name="address_line_1"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="addressLine2">Address Line 2</label>
+        <input
+          id="addressLine2"
+          type="text"
+          [(ngModel)]="contactInfo.address_line_2"
+          name="address_line_2"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="addressLine3">Address Line 3</label>
+        <input
+          id="addressLine3"
+          type="text"
+          [(ngModel)]="contactInfo.address_line_3"
+          name="address_line_3"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <input id="city" type="text" [(ngModel)]="contactInfo.city" name="city" required />
+      </div>
+
+      <div class="form-group">
+        <label for="district">District</label>
+        <input id="district" type="text" [(ngModel)]="contactInfo.district" name="district" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input id="country" type="text" [(ngModel)]="contactInfo.country" name="country" required />
+      </div>
+    </fieldset>
+
+    <!-- Submit Button -->
+    <button type="submit" class="submit-btn">Save Profile</button>
   </form>
 </div>
