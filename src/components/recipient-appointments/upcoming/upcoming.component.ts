@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService } from '../../../services/appointment.service';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-upcoming',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf,
+    NgForOf
+  ],
   templateUrl: './upcoming.component.html',
   styleUrl: './upcoming.component.scss'
 })

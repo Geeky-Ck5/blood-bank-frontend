@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BloodRequestService } from '../../../services/blood-request.service';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [],
+  imports: [
+    NgForOf,
+    NgIf
+  ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss'
 })

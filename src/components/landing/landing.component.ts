@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { AuditTrailService } from '../../services/audit-trail-service.service';
-import {IpService} from '../../services/ip-service.service';
+import { IpService } from '../../services/ip-service.service';
 
 @Component({
   selector: 'app-landing',
@@ -20,66 +20,78 @@ export class LandingComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private AuditTrailService: AuditTrailService, private ipService: IpService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private auditTrailService: AuditTrailService,
+    private ipService: IpService
+  ) {}
 
   onSubmit() {
-      const credentials = {
-        email: this.email,
-        password: this.password,
-      };
+    const credentials = {
+      email: this.email,
+      password: this.password,
+    };
 
-      this.authService.login(credentials).subscribe({
-        next: (response) => {
-          console.log('Login successful:', response);
+    this.authService.login(credentials).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
 
-          // Store token and user details
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('userId', response.userId);
-          localStorage.setItem('role', response.role);
-          localStorage.setItem('email', response.email);
+        // Store token and user details
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('role', response.role);
+        localStorage.setItem('email', response.email);
+        localStorage.setItem('firstName', response.firstName);
 
-          // Log successful login
-          this.AuditTrailService.captureAuditLog('Login successful', {
-            userId: response.userId,
-            userRole: response.role,
-            performedBy: response.email,
-            details: `User ${response.email} logged in successfully.`,
-          });
+        // Log successful login
+        this.auditTrailService.captureAuditLog('Login successful', {
+          userId: response.userId,
+          userRole: response.role,
+          performedBy: response.email,
+          details: `User ${response.email} logged in successfully.`,
+        });
 
-          // Redirect based on role
-          const role = response.role;
-          if (response.firstname) {
-            // Redirect to respective dashboards
-            if (response.role === 'donor') {
-              window.location.href = '/donor-dashboard';
-            } else if (response.role === 'recipient') {
-              window.location.href = '/recipient-dashboard';
-
-            } else if (response.role === 'admin') {
+        // Redirect based on profile completion and role
+        if (response.firstName && response.firstName.trim() !== '') {
+          // If profile is complete, go to the dashboard
+          switch (response.role) {
+            case 'donor':
+              this.router.navigate(['/donor-dashboard']);
+              break;
+            case 'recipient':
+              this.router.navigate(['/recipient-dashboard']);
+              break;
+            case 'admin':
               this.router.navigate(['/admin']);
-            } else {
+              break;
+            default:
               console.error('Unknown role:', response.role);
-            }
-          } else {
-            // Redirect to profile update based on role
-            if (response.role === 'donor') {
-              window.location.href = '/donor-profile';
-            } else if (response.role === 'recipient') {
-              window.location.href = '/recipient-profile';
-            }
           }
-        },
-        error: (err) => {
-          console.error('Login failed:', err);
-          alert('Invalid credentials. Please try again.');
+        } else {
+          // If profile is incomplete, redirect to profile update
+          switch (response.role) {
+            case 'donor':
+              this.router.navigate(['/donor-profile']);
+              break;
+            case 'recipient':
+              this.router.navigate(['/recipient-profile']);
+              break;
+            default:
+              console.error('Unknown role:', response.role);
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Login failed:', err);
+        alert('Invalid credentials. Please try again.');
 
-          // Log failed login
-          this.AuditTrailService.captureAuditLog('Login failed', {
-            performedBy: this.email,
-            details: `Failed login attempt for email: ${this.email}`,
-          });
-        },
-      });
-    }
-
+        // Log failed login
+        this.auditTrailService.captureAuditLog('Login failed', {
+          performedBy: this.email,
+          details: `Failed login attempt for email: ${this.email}`,
+        });
+      },
+    });
+  }
 }

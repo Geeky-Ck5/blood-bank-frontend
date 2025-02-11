@@ -27,30 +27,30 @@ export class AuditTrailService {
     }> = {}
   ): void {
     this.ipService.getIpDetails().subscribe({
-      next: (data: { ip: any; location: any; }) => {
-        // Prepare the audit log object
+      next: (data) => {
+        const formattedLocation = `${data.city}, ${data.region}, ${data.country}`;
+
         const auditLog = {
           userId: extraDetails.userId || null,
           userRole: extraDetails.userRole || 'guest',
           actionPerformed,
-          ipAddress: data.ip,
+          ipAddress: data.ip || 'Unknown', // Ensure IP is assigned
           performedBy: extraDetails.performedBy || 'Unknown',
           details: extraDetails.details || 'User action performed.',
           userAgent: navigator.userAgent,
-          location: data.location, // Fetched location
+          location: formattedLocation || 'Unknown', // Ensure location is assigned
         };
 
-        // Save the audit log
+        // Ensure we save after getting IP
         this.saveAuditLog(auditLog).subscribe({
           next: () => console.log('Audit log saved successfully.'),
           error: (err) => console.error('Failed to save audit log:', err),
         });
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Failed to fetch IP and location:', err);
 
-        // Prepare a fallback audit log
-        const auditLog = {
+        const fallbackAuditLog = {
           userId: extraDetails.userId || null,
           userRole: extraDetails.userRole || 'guest',
           actionPerformed,
@@ -61,10 +61,9 @@ export class AuditTrailService {
           location: 'Unknown',
         };
 
-        // Save the audit log
-        this.saveAuditLog(auditLog).subscribe({
-          next: () => console.log('Audit log saved successfully with default values.'),
-          error: (err) => console.error('Failed to save audit log:', err),
+        this.saveAuditLog(fallbackAuditLog).subscribe({
+          next: () => console.log('Audit log saved with fallback values.'),
+          error: (err) => console.error('Failed to save fallback audit log:', err),
         });
       },
     });
