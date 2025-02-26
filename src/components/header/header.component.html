@@ -11,7 +11,19 @@
       <li><a routerLink="/requests">Requests</a></li>
       <li><a routerLink="/faq">FAQ</a></li>
       <li><a routerLink="/contact">Contact Us</a></li>
-      <li><a routerLink="">Login</a></li>
+
+      <!-- Show Login if user is not logged in -->
+      <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
+
+      <!-- Show user name & logout when logged in -->
+      <li *ngIf="isLoggedIn">
+        <span class="user-dropdown" (click)="goToDashboard()">
+          {{ firstName }}
+        </span>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a href="#" (click)="logout()">Logout</a>
+      </li>
     </ul>
   </nav>
 </header>
