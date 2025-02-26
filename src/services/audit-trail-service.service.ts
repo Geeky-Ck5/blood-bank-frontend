@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {IpService} from './ip-service.service';
-
+import { IpService } from './ip-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,24 +23,32 @@ export class AuditTrailService {
       userRole: string | null;
       performedBy: string;
       details: string;
+      ipAddress: string; // ✅ Fix: Explicitly declare `ipAddress`
+      location: string;   // ✅ Fix: Explicitly declare `location`
     }> = {}
   ): void {
     this.ipService.getIpDetails().subscribe({
       next: (data) => {
-        const formattedLocation = `${data.city}, ${data.region}, ${data.country}`;
+        console.log('Fetched IP Data:', data); // Debugging Log
+
+        const formattedLocation = data.city && data.region && data.country
+          ? `${data.city}, ${data.region}, ${data.country}`
+          : 'Unknown';
 
         const auditLog = {
           userId: extraDetails.userId || null,
           userRole: extraDetails.userRole || 'guest',
           actionPerformed,
-          ipAddress: data.ip || 'Unknown', // Ensure IP is assigned
+          ipAddress: data.ip || 'Unknown', // ✅ Ensure IP is assigned
           performedBy: extraDetails.performedBy || 'Unknown',
           details: extraDetails.details || 'User action performed.',
           userAgent: navigator.userAgent,
-          location: formattedLocation || 'Unknown', // Ensure location is assigned
+          location: formattedLocation || 'Unknown', // ✅ Ensure location is assigned
         };
 
-        // Ensure we save after getting IP
+        console.log('Saving Audit Log:', auditLog); // Debugging Log before sending
+
+        // Save audit log
         this.saveAuditLog(auditLog).subscribe({
           next: () => console.log('Audit log saved successfully.'),
           error: (err) => console.error('Failed to save audit log:', err),
@@ -50,6 +57,7 @@ export class AuditTrailService {
       error: (err) => {
         console.error('Failed to fetch IP and location:', err);
 
+        // Use fallback values
         const fallbackAuditLog = {
           userId: extraDetails.userId || null,
           userRole: extraDetails.userRole || 'guest',
@@ -76,6 +84,8 @@ export class AuditTrailService {
   saveAuditLog(auditLog: any): Observable<any> {
     return this.http.post(`${this.baseUrl}`, auditLog);
   }
+
+
 
   // Get all logs
   getAllLogs(): Observable<any[]> {

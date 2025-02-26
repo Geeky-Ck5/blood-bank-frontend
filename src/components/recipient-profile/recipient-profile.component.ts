@@ -58,6 +58,7 @@ export class RecipientProfileComponent implements OnInit {
     if (!this.userId) {
       console.error('User ID not found in local storage.');
       alert('Please log in again.');
+      window.location.href = '';
       return;
     }
 

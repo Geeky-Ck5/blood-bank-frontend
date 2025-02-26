@@ -1,37 +1,54 @@
-<div class="donor-dashboard">
-  <h2>Welcome, {{ donorName }}</h2>
+<div class="dashboard-container">
 
-  <!-- Profile Section -->
-  <div class="dashboard-section">
-    <h3>Your Profile</h3>
-    <button routerLink="/profile">Update Profile</button>
-    <button routerLink="/change-password">Change Password</button>
+  <!-- Left Section: Welcome Card -->
+  <div class="left-section">
+    <div class="welcome-card">
+      <h2>Welcome, {{ firstName }}</h2>
+      <p><strong>Blood Group:</strong> {{ bloodGroup || 'Unknown' }}</p>
+      <p><strong>Total Donations:</strong> 5</p>
+    </div>
   </div>
 
-  <!-- Donation Appointments -->
-  <div class="dashboard-section">
-    <h3>Donation Appointments</h3>
-    <button routerLink="/appointments/schedule">Schedule Appointment</button>
-    <button routerLink="/appointments/history">View Past Appointments</button>
-    <button routerLink="/appointments/upcoming">View Upcoming Appointments</button>
+  <!-- Right Section: Dashboard Features -->
+  <div class="right-section">
+    <div class="grid-container">
+      <div class="grid-item" (click)="navigateTo('/donor-profile')">
+        <i class="fas fa-user-circle"></i>
+        <p>Update Profile</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/change-password')">
+        <i class="fas fa-key"></i>
+        <p>Change Password</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/schedule-appointment')">
+        <i class="fas fa-calendar-check"></i>
+        <p>Schedule Appointment</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/past-appointments')">
+        <i class="fas fa-history"></i>
+        <p>View Past Appointments</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/upcoming-appointments')">
+        <i class="fas fa-calendar-alt"></i>
+        <p>View Upcoming Appointments</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/submit-blood-request')">
+        <i class="fas fa-hand-holding-medical"></i>
+        <p>Submit a Blood Request</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/request-history')">
+        <i class="fas fa-clipboard-list"></i>
+        <p>View Request History</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/community-stories')">
+        <i class="fas fa-users"></i>
+        <p>Community Stories</p>
+      </div>
+      <div class="grid-item" (click)="navigateTo('/notifications')">
+        <i class="fas fa-bell"></i>
+        <p>View Notifications</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Blood Requests -->
-  <div class="dashboard-section">
-    <h3>Blood Requests</h3>
-    <button routerLink="/blood-requests/new">Submit a Blood Request</button>
-    <button routerLink="/blood-requests/history">View Request History</button>
-  </div>
-
-  <!-- Community and Notifications -->
-  <div class="dashboard-section">
-    <h3>Community Engagement</h3>
-    <button routerLink="/community-stories">Community Stories</button>
-  </div>
-
-  <!-- Notifications -->
-  <div class="dashboard-section">
-    <h3>Notifications</h3>
-    <button routerLink="/notifications">View Notifications</button>
-  </div>
 </div>

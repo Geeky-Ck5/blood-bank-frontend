@@ -6,8 +6,7 @@ import { Observable, catchError, of } from 'rxjs';
   providedIn: 'root',
 })
 export class IpService {
-  private baseUrl = 'https://ipinfo.io'; // Base URL for the API
-  private token = '1aa1d7bb53320a';      // Replace with your actual token
+  private baseUrl = 'https://ipinfo.io?token=1aa1d7bb53320a';      // Replace with your actual token
 
   constructor(private http: HttpClient) {
   }
@@ -19,10 +18,9 @@ export class IpService {
    */
   getIpDetails(): Observable<any> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}` // Use Bearer Token in header
-    });
+        });
 
-    return this.http.get<any>(`${this.baseUrl}?token=${this.token}`, { headers }).pipe(
+    return this.http.get<any>(`${this.baseUrl}`, { headers }).pipe(
       catchError((error) => {
         console.error('Error fetching IP details:', error);
         return of({

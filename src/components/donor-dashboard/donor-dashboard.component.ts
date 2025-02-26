@@ -1,15 +1,24 @@
-import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donor-dashboard',
   standalone: true,
-  imports: [
-    RouterLink
-  ],
   templateUrl: './donor-dashboard.component.html',
   styleUrl: './donor-dashboard.component.scss'
 })
-export class DonorDashboardComponent {
-  donorName: string = 'John Doe';
+export class DonorDashboardComponent implements OnInit {
+  firstName: string | null = '';
+  bloodGroup: string | null = '';
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.firstName = localStorage.getItem('firstName') || 'User';
+    this.bloodGroup = localStorage.getItem('bloodGroup') || 'Unknown';
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }

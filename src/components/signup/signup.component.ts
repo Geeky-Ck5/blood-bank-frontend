@@ -23,6 +23,7 @@ export class SignupComponent {
   password: string = '';
   confirmPassword: string = '';
   role: string = '';
+  userId: number | null = null;
 
 
   showModal = false; // Determines if the modal is visible
@@ -53,6 +54,8 @@ export class SignupComponent {
       next: (response: string) => {
         console.log('Signup successful:', response);
         alert(response); // Inform the user of the signup success
+
+
 
         // Trigger token generation after signup
         this.authService.generateToken({ email: this.email }).subscribe({

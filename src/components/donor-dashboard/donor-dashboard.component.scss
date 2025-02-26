@@ -1,38 +1,109 @@
-.donor-dashboard {
-  max-width: 900px;
-  margin: 2rem auto;
+/* Full Container */
+.dashboard-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3rem;
   padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  min-height: 100vh;
+}
 
-  h2 {
-    text-align: center;
-    margin-bottom: 1rem;
+/* Left Section (Welcome Card) */
+.left-section {
+  flex: 0.35; /* Increased width for better alignment */
+  display: flex;
+  justify-content: flex-end; /* Moves it slightly to the right */
+}
+
+.welcome-card {
+  background: white;
+  width: 300px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  position: relative;
+}
+
+/* Right Section (Dashboard Cards) */
+.right-section {
+  flex: 0.65; /* Moves closer to the left */
+  display: flex;
+  justify-content: flex-start; /* Moves cards slightly left */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 750px;
+}
+
+/* Grid Items (Cards) */
+.grid-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  i {
+    font-size: 2rem;
+    margin-bottom: 8px;
   }
 
-  .dashboard-section {
-    margin-bottom: 1.5rem;
+  p {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #444;
+  }
 
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
+  &:hover {
+    transform: scale(1.05);
+    background-color: #ffecec;
+  }
+}
 
-    button {
-      display: block;
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 0.5rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+/* Different Icon Colors */
+.grid-item:nth-child(1) i { color: #007bff; }  /* Blue */
+.grid-item:nth-child(2) i { color: #ff4d4d; }  /* Red */
+.grid-item:nth-child(3) i { color: #ffcc00; }  /* Yellow */
+.grid-item:nth-child(4) i { color: #28a745; }  /* Green */
+.grid-item:nth-child(5) i { color: #007bff; }
+.grid-item:nth-child(6) i { color: #ff4d4d; }
+.grid-item:nth-child(7) i { color: #ffcc00; }
+.grid-item:nth-child(8) i { color: #28a745; }
+.grid-item:nth-child(9) i { color: #ff4d4d; }
 
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-section {
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .right-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .grid-container {
+    grid-template-columns: repeat(1, minmax(140px, 1fr));
   }
 }
