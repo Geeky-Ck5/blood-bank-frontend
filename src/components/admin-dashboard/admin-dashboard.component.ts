@@ -11,10 +11,7 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
   imports: [
     RouterLink,
     RouterOutlet,
-    RouterLinkActive,
-    NgStyle,
-    FaIconComponent,
-    NgForOf
+    RouterLinkActive
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'

@@ -24,7 +24,7 @@ export class AppointmentService {
     return this.http.post(`${this.baseUrl}/schedule`, appointmentData);
   }
 
-  getUpcomingAppointments(): Observable<any[]> {
+  getUpcomingAppointments(number: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/upcoming`);
   }
 

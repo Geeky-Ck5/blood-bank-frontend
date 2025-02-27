@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CentersService } from '../../../services/centers.service';
 import { AuthService } from '../../../services/auth.service';
-import { EventsService } from '../../../services/events.service'; // Import Event Service
+import { EventsService } from '../../../services/events.service';
 
 @Component({
   selector: 'app-schedule',
@@ -17,128 +17,127 @@ import { EventsService } from '../../../services/events.service'; // Import Even
   styleUrl: './schedule.component.scss'
 })
 export class ScheduleComponent implements OnInit {
-  appointment: any = { centerId: '', date: '', time: '' };
+  appointment: any = {};
   centers: any[] = [];
+  donationCenters: any[] = [];
   preferredCenterId: number | null = null;
   saveAsPreferred: boolean = false;
+
+  // ✅ Added upcoming appointments and events
   upcomingAppointments: any[] = [];
-  lastAppointment: any = null;
-  donationEvents: any[] = [];
+  upcomingEvents: any[] = [];
 
   constructor(
     private appointmentService: AppointmentService,
     private centersService: CentersService,
     private authService: AuthService,
-    private eventsService: EventsService // Inject Event Service
+    private eventsService: EventsService
   ) {}
 
   ngOnInit() {
     this.loadCenters();
     this.loadPreferredCenter();
-    this.loadUpcomingAppointments();
-    this.loadLastAppointment();
-    this.loadDonationEvents();
+    this.loadUpcomingAppointments();  // ✅ Load upcoming appointments
+    this.loadUpcomingEvents();  // ✅ Load upcoming events
   }
 
   /**
-   * Fetch available donation centers.
+   * ✅ Fetch donation centers
    */
   loadCenters() {
     this.centersService.getCenters().subscribe({
       next: (data) => {
         this.centers = data;
+        this.donationCenters = data;
       },
       error: (err) => {
         console.error('Error loading centers:', err);
-      }
+      },
     });
   }
 
   /**
-   * Fetch preferred center from user profile.
+   * ✅ Load user's preferred donation center
    */
   loadPreferredCenter() {
     this.authService.getProfile().subscribe({
       next: (data) => {
         this.preferredCenterId = data.preferredCenter;
         if (this.preferredCenterId) {
-          this.appointment.centerId = this.preferredCenterId;
+          this.appointment.donationCenter = this.preferredCenterId;
         }
       },
       error: (err) => {
         console.error('Error loading preferred center:', err);
-      }
+      },
     });
   }
 
   /**
-   * Fetch upcoming appointments.
+   * ✅ Fetch upcoming appointments
    */
   loadUpcomingAppointments() {
-    this.appointmentService.getAppointments().subscribe({
-      next: (appointments) => {
-        this.upcomingAppointments = appointments.filter(appt => appt.status === 'Upcoming');
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    this.appointmentService.getUpcomingAppointments(parseInt(userId)).subscribe({
+      next: (data) => {
+        this.upcomingAppointments = data;
       },
-      error: (err) => console.error('Error loading upcoming appointments:', err)
+      error: (err) => {
+        console.error('Error fetching upcoming appointments:', err);
+      },
     });
   }
 
   /**
-   * Fetch the last completed appointment.
+   * ✅ Fetch upcoming donation events
    */
-  loadLastAppointment() {
-    this.appointmentService.getAppointments().subscribe({
-      next: (appointments) => {
-        const pastAppointments = appointments.filter(appt => appt.status === 'Completed');
-        this.lastAppointment = pastAppointments.length > 0 ? pastAppointments[pastAppointments.length - 1] : null;
-      },
-      error: (err) => console.error('Error loading last appointment:', err)
-    });
-  }
-
-  /**
-   * Fetch upcoming donation events.
-   */
-  loadDonationEvents() {
+  loadUpcomingEvents() {
     this.eventsService.getUpcomingEvents().subscribe({
-      next: (events) => {
-        this.donationEvents = events;
+      next: (data) => {
+        this.upcomingEvents = data;
       },
-      error: (err) => console.error('Error loading donation events:', err)
+      error: (err) => {
+        console.error('Error fetching upcoming events:', err);
+      },
     });
   }
 
   /**
-   * Save preferred donation center if user selects to do so.
-   */
-  savePreferredCenter(centerId: number) {
-    this.authService.updateProfile({ preferredCenter: centerId }).subscribe({
-      next: () => console.log('Preferred center updated successfully!'),
-      error: (err) => console.error('Error saving preferred center:', err)
-    });
-  }
-
-  /**
-   * Handle appointment scheduling.
+   * ✅ Submit appointment request
    */
   onSubmit() {
-    this.appointmentService.scheduleAppointment(this.appointment).subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('User not found. Please log in again.');
+      return;
+    }
+
+    const selectedCenter = this.donationCenters.find(center => center.id === this.appointment.donationCenter);
+    if (!selectedCenter) {
+      alert('Invalid donation center selected.');
+      return;
+    }
+
+    const appointmentPayload = {
+      userId: parseInt(userId, 10),
+      centerName: selectedCenter.name,
+      date: this.appointment.date,
+      time: this.appointment.time + ":00",
+      status: "scheduled"
+    };
+
+    this.appointmentService.scheduleAppointment(appointmentPayload).subscribe({
       next: (response) => {
-        alert('Your appointment has been scheduled!');
-
-        // Update preferred center if checkbox is checked
-        if (this.saveAsPreferred && this.appointment.centerId) {
-          this.savePreferredCenter(this.appointment.centerId);
-        }
-
-        // Refresh upcoming appointments list
-        this.loadUpcomingAppointments();
-        this.loadLastAppointment();
+        console.log('Appointment scheduled successfully:', response);
+        alert('Your appointment has been scheduled successfully!');
+        this.loadUpcomingAppointments();  // ✅ Refresh upcoming appointments
       },
       error: (err) => {
         console.error('Error scheduling appointment:', err);
         alert('Failed to schedule appointment. Please try again.');
-      }
+      },
     });
   }
 }

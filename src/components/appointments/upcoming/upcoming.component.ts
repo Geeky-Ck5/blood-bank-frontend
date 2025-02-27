@@ -20,7 +20,10 @@ export class UpcomingComponent implements OnInit {
   }
 
   fetchUpcomingAppointments() {
-    this.appointmentService.getUpcomingAppointments().subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    this.appointmentService.getUpcomingAppointments(parseInt(userId)).subscribe({
       next: (data) => {
         this.appointments = data;
       },

@@ -22,7 +22,9 @@ export class UpcomingComponent implements OnInit {
   }
 
   loadUpcomingAppointments() {
-    this.appointmentService.getUpcomingAppointments().subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+    this.appointmentService.getUpcomingAppointments(parseInt(userId)).subscribe({
       next: (data) => {
         this.appointments = data;
       },

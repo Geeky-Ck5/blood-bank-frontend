@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {DatePipe, NgForOf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import { FeedbackService } from '../../services/feedback.service';
 import { CentersService } from '../../services/centers.service';
 
@@ -9,7 +9,8 @@ import { CentersService } from '../../services/centers.service';
   imports: [
     FormsModule,
     NgForOf,
-    DatePipe
+    DatePipe,
+    NgIf
   ],
   templateUrl: './admin-feedback.component.html',
   styleUrl: './admin-feedback.component.scss'

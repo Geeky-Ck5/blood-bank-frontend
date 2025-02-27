@@ -1,12 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { CommunityService } from '../../../services/community.service';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-stories',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './stories.component.html',
   styleUrl: './stories.component.scss'

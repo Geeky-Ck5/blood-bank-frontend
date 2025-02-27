@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 
 
 @Component({
@@ -10,7 +10,9 @@ import {DatePipe} from '@angular/common';
   imports: [
     GoogleMap,
     MapMarker,
-    DatePipe
+    DatePipe,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './donor-events.component.html',
   styleUrl: './donor-events.component.scss'
