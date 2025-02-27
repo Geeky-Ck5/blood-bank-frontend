@@ -1,46 +1,68 @@
-<div class="schedule-appointment-form">
-  <h2>Schedule a Donation Appointment</h2>
-  <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm">
-    <div class="form-group">
-      <label for="donationCenter">Donation Center</label>
-      <select [(ngModel)]="appointment.donationCenter" name="donationCenter" required>
-        <option *ngFor="let center of donationCenters" [value]="center">{{ center }}</option>
-      </select>
+<div class="schedule-appointment-container">
+  <!-- Left Section: Appointment Form -->
+  <div class="left-section">
+    <h2>Schedule a Donation Appointment</h2>
+    <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm">
+      <div class="form-group">
+        <label for="donationCenter">Donation Center</label>
+        <select [(ngModel)]="appointment.centerId" name="centerId" required>
+          <option *ngFor="let center of centers" [value]="center.id">
+            {{ center.name }} - {{ center.location }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input id="date" type="date" [(ngModel)]="appointment.date" name="date" required />
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input id="time" type="time" [(ngModel)]="appointment.time" name="time" required />
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="saveAsPreferred" />
+          Save this center as my preferred donation center
+        </label>
+      </div>
+      <button type="submit" class="submit-btn">Schedule Appointment</button>
+    </form>
+  </div>
+
+  <!-- Right Section: Info Cards -->
+  <div class="right-section">
+    <div class="info-card" *ngIf="lastAppointment">
+      <h3>Last Appointment</h3>
+      <p><strong>Date:</strong> {{ lastAppointment.date }}</p>
+      <p><strong>Center:</strong> {{ lastAppointment.center }}</p>
+      <p><strong>Status:</strong> {{ lastAppointment.status }}</p>
     </div>
-    <div class="form-group">
-      <label for="date">Date</label>
-      <input id="date" type="date" [(ngModel)]="appointment.date" name="date" required />
+
+    <div class="info-card">
+      <h3>Upcoming Appointments</h3>
+      <ul *ngIf="upcomingAppointments.length > 0; else noUpcoming">
+        <li *ngFor="let appointment of upcomingAppointments">
+          <p><strong>Date:</strong> {{ appointment.date }}</p>
+          <p><strong>Center:</strong> {{ appointment.center }}</p>
+        </li>
+      </ul>
+      <ng-template #noUpcoming>
+        <p>No upcoming appointments</p>
+      </ng-template>
     </div>
-    <div class="form-group">
-      <label for="time">Time</label>
-      <input id="time" type="time" [(ngModel)]="appointment.time" name="time" required />
+
+    <div class="info-card">
+      <h3>Upcoming Donation Events</h3>
+      <ul *ngIf="donationEvents.length > 0; else noEvents">
+        <li *ngFor="let event of donationEvents">
+          <p><strong>Name:</strong> {{ event.name }}</p>
+          <p><strong>Date:</strong> {{ event.date }}</p>
+          <p><strong>Location:</strong> {{ event.location }}</p>
+        </li>
+      </ul>
+      <ng-template #noEvents>
+        <p>No upcoming events</p>
+      </ng-template>
     </div>
-    <div class="form-group">
-      <label for="donationCenter">Select Blood Donation Center</label>
-      <select
-        id="donationCenter"
-        [(ngModel)]="appointment.centerId"
-        name="centerId"
-        required
-      >
-        <option
-          *ngFor="let center of centers"
-          [value]="center.id"
-          [selected]="center.id === preferredCenterId"
-        >
-          {{ center.name }} - {{ center.location }}
-        </option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>
-        <input
-          type="checkbox"
-          [(ngModel)]="saveAsPreferred"
-        />
-        Save this center as my preferred donation center
-      </label>
-    </div>
-    <button type="submit" class="submit-btn">Schedule Appointment</button>
-  </form>
+  </div>
 </div>

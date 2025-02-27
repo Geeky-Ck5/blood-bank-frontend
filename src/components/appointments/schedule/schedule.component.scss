@@ -1,0 +1,32 @@
+.schedule-appointment-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.left-section {
+  flex: 1;
+  padding: 20px;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
