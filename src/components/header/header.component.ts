@@ -21,6 +21,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.checkLoginState();
+    // Listen for storage changes (fixes login state issue)
+    window.addEventListener('storage', () => {
+      this.checkLoginState();
+    });
   }
 
   /**
@@ -28,7 +32,7 @@ export class HeaderComponent implements OnInit {
    */
   checkLoginState() {
     const token = localStorage.getItem('token'); // Use token instead of firstName
-    this.firstName = localStorage.getItem('firstName');
+    this.firstName = localStorage.getItem('firstName') || 'User';
     this.role = localStorage.getItem('role');
     this.isLoggedIn = !!token; // If token exists, user is logged in
   }
@@ -95,6 +99,6 @@ export class HeaderComponent implements OnInit {
     this.firstName = null;
     this.role = null;
 
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
 }

@@ -25,6 +25,7 @@
         pattern="[A-Za-z][0-9]{6}"
         maxlength="14"
         placeholder="Enter your National ID"
+        (blur)="isValidNationalId()"
       />
       <small *ngIf="!isValidNationalId()">Must start with a letter and be 14 characters long.</small>
     </div>

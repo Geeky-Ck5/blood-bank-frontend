@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -16,9 +16,10 @@ import { IpService } from '../../services/ip-service.service';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   email: string = '';
   password: string = '';
+  rememberMe: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -27,6 +28,16 @@ export class LandingComponent {
     private ipService: IpService
   ) {}
 
+  ngOnInit() {
+    // Check if user data is stored in localStorage
+    const storedEmail = localStorage.getItem('rememberedEmail');
+    const storedRememberMe = localStorage.getItem('rememberMe');
+
+    if (storedRememberMe === 'true' && storedEmail) {
+      this.email = storedEmail;
+      this.rememberMe = true; // Pre-check the Remember Me checkbox
+    }
+  }
   onSubmit() {
     const credentials = {
       email: this.email,
@@ -44,6 +55,16 @@ export class LandingComponent {
         localStorage.setItem('email', response.email);
         localStorage.setItem('firstName', response.firstName);
 
+        // Handle "Remember Me" functionality
+        if (this.rememberMe) {
+          localStorage.setItem('rememberedEmail', this.email);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberMe');
+        }
+
+
         // Log successful login
         this.auditTrailService.captureAuditLog('Login successful', {
           userId: response.userId,
@@ -54,31 +75,20 @@ export class LandingComponent {
 
         // Redirect based on profile completion and role
         if (response.firstName && response.firstName.trim() !== '') {
-          // If profile is complete, go to the dashboard
-          switch (response.role) {
-            case 'donor':
-              this.router.navigate(['/donor-dashboard']);
-              break;
-            case 'recipient':
-              this.router.navigate(['/recipient-dashboard']);
-              break;
-            case 'admin':
-              this.router.navigate(['/admin']);
-              break;
-            default:
-              console.error('Unknown role:', response.role);
+          if (response.role === 'donor') {
+            window.location.href = '/donor-dashboard';
+          } else if (response.role === 'recipient') {
+            window.location.href = '/recipient-dashboard';
+          } else if (response.role === 'admin') {
+            window.location.href = '/admin';
+          } else {
+            console.error('Unknown role:', response.role);
           }
         } else {
-          // If profile is incomplete, redirect to profile update
-          switch (response.role) {
-            case 'donor':
-              this.router.navigate(['/donor-profile']);
-              break;
-            case 'recipient':
-              this.router.navigate(['/recipient-profile']);
-              break;
-            default:
-              console.error('Unknown role:', response.role);
+          if (response.role === 'donor') {
+            window.location.href = '/donor-profile';
+          } else if (response.role === 'recipient') {
+            window.location.href = '/recipient-profile';
           }
         }
       },
