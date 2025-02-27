@@ -275,6 +275,11 @@ export const routes: Routes = [
   { path: 'validate-token', component: ValidateTokenComponent },
 
   {
+    path: 'recipient-dashboard',
+    loadComponent: () =>
+      import('../components/recipient-dashboard/recipient-dashboard.component').then((m) => m.RecipientDashboardComponent),
+  },
+  {
     path: 'reset-password',
     loadComponent: () =>
       import('../components/reset-password-component/reset-password-component.component').then(
