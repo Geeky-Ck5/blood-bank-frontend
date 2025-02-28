@@ -6,11 +6,16 @@
       </a>
     </div>
     <ul class="nav-links">
-      <li><a routerLink="/dashboard">Dashboard</a></li>
-      <li><a routerLink="/inventory">Inventory</a></li>
-      <li><a routerLink="/requests">Requests</a></li>
-      <li><a routerLink="/faq">FAQ</a></li>
-      <li><a routerLink="/contact">Contact Us</a></li>
+        <li><a routerLink="/dashboard" *ngIf="isLoggedIn" (click)="goToDashboard()">Dashboard</a></li>
+
+        <!-- Show Inventory only for Admin -->
+        <li *ngIf="role === 'admin'"><a routerLink="/inventory">Inventory</a></li>
+
+        <!-- Requests: Donor -> Donor Blood Request | Recipient -> Recipient Blood Request -->
+        <li *ngIf="isLoggedIn"><a (click)="goToRequest()">Requests</a></li>
+
+        <li><a routerLink="/faq">FAQ</a></li>
+        <li><a routerLink="/contact">Contact Us</a></li>
 
       <!-- Show Login if user is NOT logged in -->
       <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>

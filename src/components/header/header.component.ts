@@ -37,6 +37,45 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = !!token; // If token exists, user is logged in
   }
 
+  goToDashboard() {
+    if (this.profileIncomplete()) {
+      this.redirectToProfile();
+    } else {
+      switch (this.role) {
+        case 'donor':
+          window.location.href = '/donor-dashboard';
+          break;
+        case 'recipient':
+          window.location.href = '/recipient-dashboard';
+          break;
+        case 'admin':
+          window.location.href = '/admin';
+          break;
+        default:
+          console.error('Unknown role:', this.role);
+      }
+    }
+  }
+
+  profileIncomplete(): boolean {
+    return !localStorage.getItem('firstName') || localStorage.getItem('firstName') === '';
+  }
+
+  redirectToProfile() {
+    if (this.role === 'donor') {
+      window.location.href = '/donor-profile';
+    } else if (this.role === 'recipient') {
+      window.location.href = '/recipient-profile';
+    }
+  }
+
+  goToRequest() {
+    if (this.role === 'donor') {
+      window.location.href = '/donor/blood-request/new';
+    } else if (this.role === 'recipient') {
+      window.location.href = '/recipient/blood-request/new';
+    }
+  }
   /**
    * Log out the user by clearing session storage and redirecting to home.
    */
@@ -78,19 +117,6 @@ export class HeaderComponent implements OnInit {
         this.clearSessionAndRedirect();
       }
     });
-  }
-
-  /**
-   * Navigate to the correct dashboard based on the user's role.
-   */
-  goToDashboard() {
-    if (this.role === 'donor') {
-      window.location.href = '/donor-dashboard';
-    } else if (this.role === 'recipient') {
-      window.location.href = '/recipient-dashboard';
-    } else if (this.role === 'admin') {
-      window.location.href = '/admin';
-    }
   }
 
   private clearSessionAndRedirect() {
