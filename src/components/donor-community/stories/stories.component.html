@@ -1,19 +1,42 @@
-<div class="community-stories">
+<div class="community-stories-container">
   <h2>Community Stories</h2>
-  <div *ngIf="stories.length === 0" class="no-stories">
-    <p>No stories found. Be the first to share your story!</p>
+
+  <!-- Approved Stories -->
+  <h3>Approved Stories</h3>
+  <div *ngIf="approvedStories.length > 0; else noApprovedStories">
+    <div class="story-card" *ngFor="let story of approvedStories">
+      <div class="story-header">
+        <i class="fas fa-user-circle user-icon"></i>
+        <span class="story-user">{{ story.userName }}</span>
+        <span class="story-date">{{ story.datePosted | date: 'medium' }}</span>
+      </div>
+      <h3 class="story-title">{{ story.title }}</h3>
+      <p class="story-content">{{ story.content }}</p>
+    </div>
   </div>
-  <div *ngFor="let story of stories" class="story-card">
-    <h3>{{ story.title }}</h3>
-    <p>{{ story.content }}</p>
-    <p><strong>By:</strong> {{ story.author }}</p>
+  <ng-template #noApprovedStories>
+    <p class="no-stories">No approved stories yet.</p>
+  </ng-template>
+
+  <!-- User's Pending Stories -->
+  <h3>Your Pending Stories</h3>
+  <div *ngIf="userStories.length > 0; else noPendingStories">
+    <div class="story-card pending" *ngFor="let story of userStories">
+      <h3 class="story-title">{{ story.title }} (Pending)</h3>
+      <p class="story-content">{{ story.content }}</p>
+    </div>
   </div>
-  <div class="share-story">
+  <ng-template #noPendingStories>
+    <p class="no-stories">No pending stories.</p>
+  </ng-template>
+
+  <!-- Share Your Story -->
+  <div class="share-story-form">
     <h3>Share Your Story</h3>
-    <form (ngSubmit)="onShareStory()" #storyForm="ngForm">
-      <input [(ngModel)]="newStory.title" name="title" placeholder="Story Title" required />
-      <textarea [(ngModel)]="newStory.content" name="content" placeholder="Your Story" required></textarea>
-      <button type="submit">Share</button>
+    <form (ngSubmit)="submitStory()" #storyForm="ngForm">
+      <input type="text" class="story-title-input" [(ngModel)]="newStory.title" name="title" placeholder="Story Title" required />
+      <textarea class="story-content-input" [(ngModel)]="newStory.content" name="content" placeholder="Your Story" required></textarea>
+      <button type="submit" class="share-button">Submit for Approval</button>
     </form>
   </div>
 </div>
