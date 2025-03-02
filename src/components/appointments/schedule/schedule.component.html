@@ -3,17 +3,18 @@
   <div class="left-section">
     <h2>Schedule a Donation Appointment</h2>
     <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm" class="appointment-form">
+
+      <!-- Donation Center Selection -->
       <div class="form-group">
-        <!-- Donation Center Selection -->
         <label for="donationCenter">Donation Center</label>
         <select
           id="donationCenter"
           [(ngModel)]="selectedCenter"
           name="selectedCenter"
           required
-          (change)="updateSelectedCenter()"
+          (change)="onCenterSelectionChange()"
         >
-          <option *ngFor="let center of donationCenters" [value]="center">
+          <option *ngFor="let center of donationCenters" [ngValue]="center">
             {{ center.name }} - {{ center.location }}
           </option>
         </select>
@@ -21,26 +22,17 @@
 
       <!-- Google Map Section -->
       <div class="map-container">
-        <google-map [center]="mapCenter" [zoom]="mapZoom" height="400px" width="100%">
-          <map-marker
-            *ngFor="let center of donationCenters"
-            [position]="center.location"
-            [title]="center.name"
-            [options]="{ icon: { url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' } }"
-          >
-          </map-marker>
-
-          <!-- Highlight User's Selected Center -->
-          <map-marker
-            *ngIf="selectedCenter"
-            [position]="selectedCenter.location"
-            [title]="'Your Selection'"
-            [options]="{ icon: { url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' } }"
-          >
-          </map-marker>
+        <google-map height="400px" width="100%" [center]="mapCenter" [zoom]="mapZoom">
+          <map-marker *ngFor="let marker of markers"
+                      [position]="marker.position"
+                      [title]="marker.title"
+                      [options]="{icon: marker.icon}"
+                      (mapClick)="onMarkerClick(marker)"
+          ></map-marker>
         </google-map>
       </div>
 
+      <!-- Date & Time Fields -->
       <div class="form-group">
         <label for="date">Date</label>
         <input id="date" type="date" [(ngModel)]="appointment.date" name="date" required />
@@ -51,6 +43,7 @@
         <input id="time" type="time" [(ngModel)]="appointment.time" name="time" required />
       </div>
 
+      <!-- Preferred Center Checkbox -->
       <div class="form-group checkbox-group">
         <input type="checkbox" [(ngModel)]="saveAsPreferred" id="preferred-center" />
         <label for="preferred-center">Save this center as my preferred donation center</label>
@@ -59,27 +52,26 @@
       <button type="submit" class="btn-primary">Schedule Appointment</button>
     </form>
   </div>
-
-  <!-- Right Section: Upcoming Appointments & Events -->
-  <div class="right-section">
-    <div class="info-card">
-      <h3>Upcoming Appointments</h3>
-      <p *ngIf="!upcomingAppointments.length">No upcoming appointments</p>
-      <ul *ngIf="upcomingAppointments.length">
-        <li *ngFor="let appointment of upcomingAppointments">
-          {{ appointment.date }} at {{ appointment.time }}
-        </li>
-      </ul>
-    </div>
-
-    <div class="info-card">
-      <h3>Upcoming Donation Events</h3>
-      <p *ngIf="!upcomingEvents.length">No upcoming events</p>
-      <ul *ngIf="upcomingEvents.length">
-        <li *ngFor="let event of upcomingEvents">
-          {{ event.name }} - {{ event.date }}
-        </li>
-      </ul>
-    </div>
+  <div>
+  <div class="info-card">
+    <h3>Upcoming Appointments</h3>
+    <p *ngIf="!upcomingAppointments || upcomingAppointments.length === 0">No upcoming appointments</p>
+    <ul *ngIf="upcomingAppointments && upcomingAppointments.length > 0">
+      <li *ngFor="let appointment of upcomingAppointments">
+        <strong>{{ appointment.date }}</strong> at <strong>{{ appointment.time }}</strong>
+      </li>
+    </ul>
   </div>
+
+
+  <div class="info-card">
+    <h3>Upcoming Donation Events</h3>
+    <p *ngIf="!upcomingEvents || upcomingEvents.length === 0">No upcoming events</p>
+    <ul *ngIf="upcomingEvents && upcomingEvents.length > 0">
+      <li *ngFor="let event of upcomingEvents">
+        <strong>{{ event.name }}</strong> - {{ event.date }}
+      </li>
+    </ul>
+  </div>
+    </div>
 </div>

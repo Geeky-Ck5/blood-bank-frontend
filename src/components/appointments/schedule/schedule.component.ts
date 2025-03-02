@@ -8,7 +8,6 @@ import { AuthService } from '../../../services/auth.service';
 import { EventsService } from '../../../services/events.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 
-
 @Component({
   selector: 'app-schedule',
   standalone: true,
@@ -21,17 +20,18 @@ import { GoogleMapsModule } from '@angular/google-maps';
 export class ScheduleComponent implements OnInit {
   appointment: any = {};
   centers: any[] = [];
-  selectedCenter: any = null;
   donationCenters: any[] = [];
   preferredCenterId: number | null = null;
   saveAsPreferred: boolean = false;
-
-  // ✅ Added upcoming appointments and events
   upcomingAppointments: any[] = [];
   upcomingEvents: any[] = [];
-  // Default Map Settings (Centered in Mauritius)
-  mapCenter = { lat: -20.297617, lng: 57.498196 };
+
+  // Google Maps
+  mapCenter = { lat: -20.297617, lng: 57.498196 }; // Default center
   mapZoom = 12;
+  markers: any[] = [];
+  selectedMarker: any = null;
+  selectedCenter: any = null;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -43,57 +43,78 @@ export class ScheduleComponent implements OnInit {
   ngOnInit() {
     this.loadCenters();
     this.loadPreferredCenter();
-    this.loadUpcomingAppointments();  // ✅ Load upcoming appointments
-    this.loadUpcomingEvents();  // ✅ Load upcoming events
+    this.loadUpcomingAppointments();
+    this.loadUpcomingEvents();
   }
 
+  /**
+   * ✅ Load donation centers and populate map markers
+   */
   loadCenters() {
     this.centersService.getCenters().subscribe({
-      next: (data) => {
-        this.donationCenters = data.map((center) => ({
-          name: center.name,
-          location: { lat: center.latitude, lng: center.longitude },
-        }));
+      next: (centers) => {
+        this.donationCenters = centers;
+        this.markers = centers
+          .filter(center => center.latitude && center.longitude)
+          .map(center => ({
+            position: {
+              lat: Number(center.latitude),
+              lng: Number(center.longitude),
+            },
+            title: center.name,
+            centerData: center,
+            icon: {
+              url: center.type === 'hospital'
+                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+              scaledSize: { width: 40, height: 40 }
+            }
+          }));
       },
       error: (err) => console.error('Error loading centers:', err),
     });
   }
 
-  updateSelectedCenter() {
-    if (this.selectedCenter) {
-      this.mapCenter = this.selectedCenter.location; // Move map to selected center
+  /**
+   * ✅ When user selects a center from dropdown, update map
+   */
+  onCenterSelectionChange() {
+    if (this.selectedCenter && this.selectedCenter.latitude && this.selectedCenter.longitude) {
+      this.mapCenter = {
+        lat: Number(this.selectedCenter.latitude),  // Convert to number
+        lng: Number(this.selectedCenter.longitude) // Convert to number
+      };
+    } else {
+      console.warn('Invalid center location, using default map center.');
+      this.mapCenter = { lat: -20.297617, lng: 57.498196 };  // Default fallback location
     }
   }
 
   /**
-   * ✅ Load user's preferred donation center
+   * ✅ When user clicks on a marker, update dropdown selection
+   */
+  onMarkerClick(marker: any) {
+    if (marker.centerData && marker.centerData.latitude && marker.centerData.longitude) {
+      this.selectedCenter = marker.centerData; // Update dropdown
+      this.onCenterSelectionChange(); // Sync map center
+    } else {
+      console.warn('Invalid marker location clicked.');
+    }
+  }
+
+  /**
+   * ✅ Load preferred center for user
    */
   loadPreferredCenter() {
     this.authService.getProfile().subscribe({
       next: (data) => {
         this.preferredCenterId = data.preferredCenter;
         if (this.preferredCenterId) {
-          this.appointment.donationCenter = this.preferredCenterId;
+          this.selectedCenter = this.donationCenters.find(center => center.id === this.preferredCenterId);
+          this.onCenterSelectionChange();
         }
       },
-      error: (err) => {
-        console.error('Error loading preferred center:', err);
-      },
-    });
-  }
-
-
-  loadUpcomingAppointments() {
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
-
-    this.appointmentService.getUpcomingAppointments(parseInt(userId)).subscribe({
-      next: (data) => {
-        this.upcomingAppointments = data;
-      },
-      error: (err) => {
-        console.error('Error fetching upcoming appointments:', err);
-      },
+      error: (err) => console.error('Error loading preferred center:', err),
     });
   }
 
@@ -105,9 +126,22 @@ export class ScheduleComponent implements OnInit {
       next: (data) => {
         this.upcomingEvents = data;
       },
-      error: (err) => {
-        console.error('Error fetching upcoming events:', err);
+      error: (err) => console.error('Error fetching upcoming events:', err),
+    });
+  }
+
+  /**
+   * ✅ Fetch upcoming appointments
+   */
+  loadUpcomingAppointments() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    this.appointmentService.getUpcomingAppointments(parseInt(userId)).subscribe({
+      next: (data) => {
+        this.upcomingAppointments = data;
       },
+      error: (err) => console.error('Error fetching upcoming appointments:', err),
     });
   }
 
@@ -121,30 +155,25 @@ export class ScheduleComponent implements OnInit {
       return;
     }
 
-    const selectedCenter = this.donationCenters.find(center => center.id === this.appointment.donationCenter);
-    if (!selectedCenter) {
-      alert('Invalid donation center selected.');
+    if (!this.selectedCenter) {
+      alert('Please select a donation center.');
       return;
     }
 
     const appointmentPayload = {
       userId: parseInt(userId, 10),
-      centerName: selectedCenter.name,
+      centerName: this.selectedCenter.name,
       date: this.appointment.date,
       time: this.appointment.time + ":00",
       status: "scheduled"
     };
 
     this.appointmentService.scheduleAppointment(appointmentPayload).subscribe({
-      next: (response) => {
-        console.log('Appointment scheduled successfully:', response);
+      next: () => {
         alert('Your appointment has been scheduled successfully!');
-        this.loadUpcomingAppointments();  // ✅ Refresh upcoming appointments
+        this.loadUpcomingAppointments();
       },
-      error: (err) => {
-        console.error('Error scheduling appointment:', err);
-        alert('Failed to schedule appointment. Please try again.');
-      },
+      error: (err) => console.error('Error scheduling appointment:', err),
     });
   }
 }
