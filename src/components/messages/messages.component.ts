@@ -82,4 +82,18 @@ export class MessagesComponent implements OnInit {
     });
   }
 
+  markAsRead(messageId: number) {
+    this.messagingService.markMessageAsRead(messageId).subscribe({
+      next: () => {
+        console.log(`Message ${messageId} marked as read`);
+        this.messages = this.messages.map(msg =>
+          msg.messageId === messageId ? { ...msg, isRead: true } : msg
+        );
+      },
+      error: (err) => {
+        console.error('Error marking message as read:', err);
+      },
+    });
+  }
+
 }
