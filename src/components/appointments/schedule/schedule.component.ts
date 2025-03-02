@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { CentersService } from '../../../services/centers.service';
 import { AuthService } from '../../../services/auth.service';
 import { EventsService } from '../../../services/events.service';
+import { GoogleMapsModule } from '@angular/google-maps';
+
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
   imports: [
-    FormsModule, RouterLink, CommonModule
+    FormsModule, RouterLink, CommonModule, GoogleMapsModule
   ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
@@ -19,6 +21,7 @@ import { EventsService } from '../../../services/events.service';
 export class ScheduleComponent implements OnInit {
   appointment: any = {};
   centers: any[] = [];
+  selectedCenter: any = null;
   donationCenters: any[] = [];
   preferredCenterId: number | null = null;
   saveAsPreferred: boolean = false;
@@ -26,6 +29,9 @@ export class ScheduleComponent implements OnInit {
   // ✅ Added upcoming appointments and events
   upcomingAppointments: any[] = [];
   upcomingEvents: any[] = [];
+  // Default Map Settings (Centered in Mauritius)
+  mapCenter = { lat: -20.297617, lng: 57.498196 };
+  mapZoom = 12;
 
   constructor(
     private appointmentService: AppointmentService,
@@ -41,19 +47,22 @@ export class ScheduleComponent implements OnInit {
     this.loadUpcomingEvents();  // ✅ Load upcoming events
   }
 
-  /**
-   * ✅ Fetch donation centers
-   */
   loadCenters() {
     this.centersService.getCenters().subscribe({
       next: (data) => {
-        this.centers = data;
-        this.donationCenters = data;
+        this.donationCenters = data.map((center) => ({
+          name: center.name,
+          location: { lat: center.latitude, lng: center.longitude },
+        }));
       },
-      error: (err) => {
-        console.error('Error loading centers:', err);
-      },
+      error: (err) => console.error('Error loading centers:', err),
     });
+  }
+
+  updateSelectedCenter() {
+    if (this.selectedCenter) {
+      this.mapCenter = this.selectedCenter.location; // Move map to selected center
+    }
   }
 
   /**
@@ -73,9 +82,7 @@ export class ScheduleComponent implements OnInit {
     });
   }
 
-  /**
-   * ✅ Fetch upcoming appointments
-   */
+
   loadUpcomingAppointments() {
     const userId = localStorage.getItem('userId');
     if (!userId) return;

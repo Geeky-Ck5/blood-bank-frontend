@@ -4,6 +4,7 @@ import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuditTrailService } from '../../services/audit-trail-service.service';
 import { IpService } from '../../services/ip-service.service';
+import { MessagingService } from '../../services/messaging.service';
 
 @Component({
   selector: 'app-header',
@@ -15,9 +16,11 @@ import { IpService } from '../../services/ip-service.service';
 export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   firstName: string | null = null;
+  unreadMessages: number = 0;
   role: string | null = null;
+  userId: number | null = null;
 
-  constructor(private router: Router, private auditTrailService: AuditTrailService, private ipService: IpService) {}
+  constructor(private router: Router, private auditTrailService: AuditTrailService, private ipService: IpService, private messagingService: MessagingService) { }
 
   ngOnInit() {
     this.checkLoginState();
@@ -35,8 +38,21 @@ export class HeaderComponent implements OnInit {
     this.firstName = localStorage.getItem('firstName') || 'User';
     this.role = localStorage.getItem('role');
     this.isLoggedIn = !!token; // If token exists, user is logged in
+    this.loadUnreadMessages();
   }
 
+  loadUnreadMessages() {
+    if (this.userId) {
+      this.messagingService.getUnreadMessageCount(this.userId).subscribe({
+        next: (count: number) => {
+          this.unreadMessages = count;
+        },
+        error: (err: any) => {
+          console.error('Error fetching unread messages:', err);
+        }
+      });
+    }
+  }
   goToDashboard() {
     if (this.profileIncomplete()) {
       this.redirectToProfile();

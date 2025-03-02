@@ -286,6 +286,13 @@ export const routes: Routes = [
         (m) => m.ResetPasswordComponentComponent
       ),
   },
+  {
+    path: 'messages',
+    loadComponent: () =>
+      import('../components/messages/messages.component').then(
+        (m) => m.MessagesComponent
+      ),
+  },
 
   { path: '**', redirectTo: '' },
 ];

@@ -1,17 +1,44 @@
 <div class="schedule-container">
-  <!-- Left Section: Appointment Form -->
+  <!-- Left Section: Appointment Form & Map -->
   <div class="left-section">
     <h2>Schedule a Donation Appointment</h2>
     <form (ngSubmit)="onSubmit()" #scheduleForm="ngForm" class="appointment-form">
       <div class="form-group">
         <!-- Donation Center Selection -->
         <label for="donationCenter">Donation Center</label>
-        <select id="donationCenter" [(ngModel)]="appointment.donationCenter" name="donationCenter" required>
-          <option *ngFor="let center of donationCenters" [value]="center.id">
+        <select
+          id="donationCenter"
+          [(ngModel)]="selectedCenter"
+          name="selectedCenter"
+          required
+          (change)="updateSelectedCenter()"
+        >
+          <option *ngFor="let center of donationCenters" [value]="center">
             {{ center.name }} - {{ center.location }}
           </option>
         </select>
+      </div>
 
+      <!-- Google Map Section -->
+      <div class="map-container">
+        <google-map [center]="mapCenter" [zoom]="mapZoom" height="400px" width="100%">
+          <map-marker
+            *ngFor="let center of donationCenters"
+            [position]="center.location"
+            [title]="center.name"
+            [options]="{ icon: { url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png' } }"
+          >
+          </map-marker>
+
+          <!-- Highlight User's Selected Center -->
+          <map-marker
+            *ngIf="selectedCenter"
+            [position]="selectedCenter.location"
+            [title]="'Your Selection'"
+            [options]="{ icon: { url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' } }"
+          >
+          </map-marker>
+        </google-map>
       </div>
 
       <div class="form-group">
@@ -39,7 +66,9 @@
       <h3>Upcoming Appointments</h3>
       <p *ngIf="!upcomingAppointments.length">No upcoming appointments</p>
       <ul *ngIf="upcomingAppointments.length">
-        <li *ngFor="let appointment of upcomingAppointments">{{ appointment.date }} at {{ appointment.time }}</li>
+        <li *ngFor="let appointment of upcomingAppointments">
+          {{ appointment.date }} at {{ appointment.time }}
+        </li>
       </ul>
     </div>
 
@@ -47,7 +76,9 @@
       <h3>Upcoming Donation Events</h3>
       <p *ngIf="!upcomingEvents.length">No upcoming events</p>
       <ul *ngIf="upcomingEvents.length">
-        <li *ngFor="let event of upcomingEvents">{{ event.name }} - {{ event.date }}</li>
+        <li *ngFor="let event of upcomingEvents">
+          {{ event.name }} - {{ event.date }}
+        </li>
       </ul>
     </div>
   </div>

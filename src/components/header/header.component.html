@@ -16,6 +16,7 @@
 
         <li><a routerLink="/faq">FAQ</a></li>
         <li><a routerLink="/contact">Contact Us</a></li>
+      <li><a routerLink="/messages">Messages <span *ngIf="unreadMessages > 0" class="badge">{{ unreadMessages }}</span></a></li>
 
       <!-- Show Login if user is NOT logged in -->
       <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>

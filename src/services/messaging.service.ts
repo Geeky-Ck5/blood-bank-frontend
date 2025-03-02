@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class MessagingService {
   private baseUrl = 'http://localhost:8080/api/messages';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   sendMessage(messageData: { senderId: number; recipientId: number; message: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/send`, messageData);
@@ -28,5 +29,9 @@ export class MessagingService {
 
   deleteMessage(messageId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${messageId}`);
+  }
+
+  getUnreadMessageCount(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/unread-count/${userId}`);
   }
 }
