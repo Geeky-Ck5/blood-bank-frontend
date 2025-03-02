@@ -5,20 +5,36 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationsService {
-  private baseUrl = 'http://your-backend-api.com/api/notifications';
+export class NotificationService {
+  private baseUrl = 'http://localhost:8080/api/notifications';
 
   constructor(private http: HttpClient) {}
 
-  getNotifications(role: 'donor' | 'recipient'): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${role}`);
+  /**
+   * ✅ Get Notifications for User
+   */
+  getNotifications(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/user/${userId}`);
   }
 
-  markNotificationAsRead(notificationId: number): Observable<void> {
-    return this.http.patch<void>(`${this.baseUrl}/mark-as-read/${notificationId}`, {});
+  /**
+   * ✅ Send Notification to a Single User
+   */
+  sendNotification(userId: number, message: string, type: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/send/${userId}?message=${message}&type=${type}`, {});
   }
 
-  getEligibilityReminders(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/donor/eligibility`);
+  /**
+   * ✅ Mark Notification as Read
+   */
+  markAsRead(notificationId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/read/${notificationId}`, {});
+  }
+
+  /**
+   * ✅ Bulk Send Notifications
+   */
+  sendBulkNotifications(userIds: number[], message: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/bulk-send`, { userIds, message });
   }
 }

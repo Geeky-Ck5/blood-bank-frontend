@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuditTrailService } from '../../services/audit-trail-service.service';
 import { IpService } from '../../services/ip-service.service';
 import { MessagingService } from '../../services/messaging.service';
+import {NotificationService} from '../../services/notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -19,8 +20,9 @@ export class HeaderComponent implements OnInit {
   unreadMessages: number = 0;
   role: string | null = null;
   userId: number | null = null;
+  unreadCount: number = 0;
 
-  constructor(private router: Router, private auditTrailService: AuditTrailService, private ipService: IpService, private messagingService: MessagingService) { }
+  constructor(private router: Router, private auditTrailService: AuditTrailService, private ipService: IpService, private messagingService: MessagingService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.checkLoginState();
@@ -28,7 +30,23 @@ export class HeaderComponent implements OnInit {
     window.addEventListener('storage', () => {
       this.checkLoginState();
     });
+    this.loadUnreadNotifications();
   }
+
+  loadUnreadNotifications() {
+    this.notificationService.getNotifications(this.userId!).subscribe({
+      next: (data) => {
+        this.unreadCount = data.filter(n => n.status === 'UNREAD').length;
+      },
+      error: (err) => console.error('Error loading notifications:', err),
+    });
+  }
+
+  navigateToNotifications() {
+    this.router.navigate(['/notifications']);
+  }
+
+
 
   /**
    * Check if the user is logged in based on localStorage.

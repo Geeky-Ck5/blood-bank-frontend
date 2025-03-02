@@ -1,0 +1,13 @@
+<div class="notifications-container">
+  <h2>Notifications <span class="badge">{{ unreadCount }}</span></h2>
+
+  <ul class="notification-list">
+    <li *ngFor="let notification of notifications" [class.unread]="notification.status === 'UNREAD'">
+      <p>{{ notification.message }}</p>
+      <span class="date">{{ notification.dateCreated | date: 'short' }}</span>
+      <button *ngIf="notification.status === 'UNREAD'" (click)="markAsRead(notification.notificationId)">Mark as Read</button>
+    </li>
+  </ul>
+
+  <p *ngIf="notifications.length === 0">No notifications available.</p>
+</div>

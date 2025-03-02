@@ -16,6 +16,15 @@
 
         <li><a routerLink="/faq">FAQ</a></li>
         <li><a routerLink="/contact">Contact Us</a></li>
+      <nav class="header-nav">
+        <ul>
+          <li (click)="navigateToNotifications()" class="notifications-tab">
+            <i class="fas fa-bell"></i>
+            <span class="badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+          </li>
+        </ul>
+      </nav>
+
       <li><a routerLink="/messages">Messages <span *ngIf="unreadMessages > 0" class="badge">{{ unreadMessages }}</span></a></li>
 
       <!-- Show Login if user is NOT logged in -->
