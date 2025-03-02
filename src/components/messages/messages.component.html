@@ -1,0 +1,19 @@
+<div class="message-container">
+  <h2>Messages</h2>
+
+  <div class="message-list">
+    <div *ngFor="let msg of messages" class="message-item" [class.unread]="msg.status === 'UNREAD'">
+      <strong *ngIf="msg.senderId !== userId">Admin:</strong>
+      <strong *ngIf="msg.senderId === userId">You:</strong>
+      <p>{{ msg.message }}</p>
+      <span class="message-time">{{ msg.timestamp | date: 'short' }}</span>
+      <button *ngIf="msg.status === 'UNREAD'" (click)="markAsRead(msg.messageId)">Mark as Read</button>
+    </div>
+  </div>
+
+  <!-- Send Message -->
+  <div class="message-input">
+    <input type="text" [(ngModel)]="newMessage" placeholder="Type your message..." />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>
