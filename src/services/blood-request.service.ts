@@ -10,8 +10,8 @@ export class BloodRequestService {
 
   constructor(private http: HttpClient) {}
 
-  submitBloodRequest(requestData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/submit`, requestData);
+  submitBloodRequest(userId: number, requestData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/submit/${userId}`, requestData);
   }
 
   getBloodRequestHistory(): Observable<any[]> {

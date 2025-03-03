@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BloodRequestService } from '../../../services/blood-request.service';
 
 @Component({
@@ -12,17 +12,26 @@ import { BloodRequestService } from '../../../services/blood-request.service';
   styleUrl: './new.component.scss'
 })
 export class NewComponent {
+  userId = 1;  //
   request = {
-    bloodType: '',
-    quantity: 1,
-    urgency: 'normal',
-    reason: '',
+    bloodGroup: '',       //
+    unitsRequested: 1,    //
+    priority: 'normal',   //
+    reason: '',           //
+    requestDate: new Date().toISOString().split('T')[0], // ✅ Auto-sets today’s date
+    status: 'PENDING' //
   };
 
   constructor(private bloodRequestService: BloodRequestService) {}
 
   onSubmit() {
-    this.bloodRequestService.submitBloodRequest(this.request).subscribe({
+    if (!this.request.bloodGroup || !this.request.unitsRequested) {
+      alert('Please fill in all required fields.');
+      this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
+      return;
+    }
+
+    this.bloodRequestService.submitBloodRequest(this.userId, this.request).subscribe({
       next: (response) => {
         alert('Your blood request has been submitted.');
         console.log('Blood request submitted:', response);
