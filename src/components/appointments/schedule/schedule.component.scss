@@ -1,38 +1,44 @@
 .schedule-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   gap: 20px;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
+
+  .left-section {
+    width: 65%; /* Larger area for form and map */
+  }
+
+  .right-section {
+    width: 30%; /* Smaller area for upcoming appointments/events */
+  }
+
+  .map-container {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .info-card {
+    padding: 15px;
+    margin-top: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .btn-primary {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 450px; /* Increased Height */
+    border-radius: 10px;
+    overflow: hidden;
+  }
 }
 
-.left-section {
-  flex: 2;
-}
-
-.right-section {
-  flex: 1;
-}
-
-.map-container {
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.info-card {
-  padding: 15px;
-  margin-top: 15px;
-  background: #f9f9f9;
-  border-radius: 8px;
-}
-
-.btn-primary {
-  background-color: #ff4d4d;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}

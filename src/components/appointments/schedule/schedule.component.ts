@@ -53,20 +53,24 @@ export class ScheduleComponent implements OnInit {
     this.centersService.getCenters().subscribe({
       next: (centers) => {
         this.donationCenters = centers;
+
+        // Check if there are valid lat/lng values
         this.markers = centers
           .filter(center => center.latitude && center.longitude)
           .map(center => ({
             position: {
-              lat: Number(center.latitude),
-              lng: Number(center.longitude),
+              lat: Number(center.latitude),  // Ensure it's a number
+              lng: Number(center.longitude) // Ensure it's a number
             },
             title: center.name,
             centerData: center,
-            icon: {
-              url: center.type === 'hospital'
-                ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-              scaledSize: { width: 40, height: 40 }
+            options: {
+              icon: {
+                url: center.type === 'hospital'
+                  ? 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                  : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                scaledSize: new google.maps.Size(30, 30), // Adjust icon size
+              }
             }
           }));
       },
@@ -123,7 +127,8 @@ export class ScheduleComponent implements OnInit {
   loadUpcomingEvents() {
     this.eventsService.getUpcomingEvents().subscribe({
       next: (data) => {
-        this.upcomingEvents = data;
+        console.log('Upcoming Events Data:', data); // Debugging log
+        this.upcomingEvents = data.length ? data : []; // Ensure it's an array
       },
       error: (err) => console.error('Error fetching upcoming events:', err),
     });
