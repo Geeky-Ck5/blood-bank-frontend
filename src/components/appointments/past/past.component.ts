@@ -29,4 +29,19 @@ export class PastComponent implements OnInit {
     });
   }
 
+  updateAppointmentStatus(appointmentId: number, newStatus: string) {
+    this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).subscribe({
+      next: (updatedAppointment) => {
+        // Update the appointment in the local array
+        const index = this.appointments.findIndex(app => app.id === appointmentId);
+        if (index !== -1) {
+          this.appointments[index] = updatedAppointment;
+        }
+      },
+      error: (err) => {
+        console.error('Error updating appointment status:', err);
+      }
+    });
+  }
+
 }

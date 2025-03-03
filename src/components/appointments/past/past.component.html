@@ -1,9 +1,26 @@
 <div class="appointments-list">
   <h2>Past Appointments</h2>
-  <div *ngFor="let appointment of appointments" class="appointment-card">
-    <p><strong>Donation Center:</strong> {{ appointment.donationCenter }}</p>
-    <p><strong>Date:</strong> {{ appointment.date }}</p>
-    <p><strong>Time:</strong> {{ appointment.time }}</p>
-    <p><strong>Status:</strong> {{ appointment.status }}</p>
-  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let appointment of appointments">
+      <td>{{ appointment.userId }}</td>
+      <td>{{ appointment.email }}</td>
+      <td>{{ appointment.role }}</td>
+      <td>{{ appointment.status }}</td>
+      <td>
+        <button (click)="updateAppointmentStatus(appointment.id, 'Completed')">Completed</button>
+        <button (click)="updateAppointmentStatus(appointment.id, 'Cancelled')">Cancelled</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
