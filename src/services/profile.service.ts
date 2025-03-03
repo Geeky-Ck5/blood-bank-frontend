@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUrl = 'http://localhost:8080/api/user'; // Adjust base URL as needed
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/user'; // Adjust base URL as needed
 
   constructor(private http: HttpClient) {}
 

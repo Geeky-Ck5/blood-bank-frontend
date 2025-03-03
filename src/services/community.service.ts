@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommunityStoriesService {
-  private apiUrl = 'http://localhost:8080/api/community-stories';
+  private apiUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/community-stories';
 
   constructor(private http: HttpClient) {}
 

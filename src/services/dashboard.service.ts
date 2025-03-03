@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DashboardService {
-  private statsUrl = 'http://localhost:8080/api/dashboard/stats';
-  private bloodInventoryUrl = 'http://localhost:8080/api/blood-inventory/summary';
+  private statsUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/dashboard/stats';
+  private bloodInventoryUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/blood-inventory/summary';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class DashboardService {
   }
 
   getExpiryAlerts(): Observable<any[]> {
-    const expiryAlertsUrl = 'http://localhost:8080/api/blood-inventory/expiry-alerts';
+    const expiryAlertsUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/blood-inventory/expiry-alerts';
     return this.http.get<any[]>(expiryAlertsUrl);
   }
 }

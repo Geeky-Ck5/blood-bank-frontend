@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class MessagingService {
-  private baseUrl = 'http://localhost:8080/api/messages';
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/messages';
 
   constructor(private http: HttpClient) {
   }

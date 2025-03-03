@@ -16,7 +16,7 @@ export interface Appointment {
   providedIn: 'root',
 })
 export class AppointmentService {
-  private baseUrl = 'http://localhost:8080/api/appointments';
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/appointments';
 
   constructor(private http: HttpClient) {}
 

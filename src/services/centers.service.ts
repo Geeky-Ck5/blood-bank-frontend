@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CentersService {
-  private baseUrl = 'http://localhost:8080/api/centers';
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/centers';
 
   constructor(private http: HttpClient) {}
 
