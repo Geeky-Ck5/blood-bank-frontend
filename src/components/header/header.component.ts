@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgOptimizedImage } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuditTrailService } from '../../services/audit-trail-service.service';
 import { IpService } from '../../services/ip-service.service';
@@ -10,7 +10,7 @@ import {NotificationService} from '../../services/notifications.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgOptimizedImage, NgIf],
+  imports: [RouterLink,  NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

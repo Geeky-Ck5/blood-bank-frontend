@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import {RouterOutlet} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
   imports: [
-    RouterOutlet,
+
     NgForOf,
     NgIf
   ],

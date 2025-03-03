@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common'; // Import your AuthService
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgIf],
+  imports: [ FormsModule, NgIf],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppointmentService } from '../../../services/appointment.service';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CentersService } from '../../../services/centers.service';
 import { AuthService } from '../../../services/auth.service';
@@ -12,7 +11,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
   selector: 'app-schedule',
   standalone: true,
   imports: [
-    FormsModule, RouterLink, CommonModule, GoogleMapsModule
+    FormsModule,  CommonModule, GoogleMapsModule
   ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'

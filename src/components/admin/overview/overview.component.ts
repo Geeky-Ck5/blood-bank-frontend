@@ -3,15 +3,12 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgForOf, NgStyle} from "@angular/common";
 import { DashboardService } from '../../../services/dashboard.service';
 import { faUser, faHeart, faSyringe, faTasks, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+
 
 @Component({
   selector: 'app-overview',
   standalone: true,
   imports: [
-    RouterLink,
-    RouterOutlet,
-    RouterLinkActive,
     NgStyle,
     FaIconComponent,
     NgForOf
