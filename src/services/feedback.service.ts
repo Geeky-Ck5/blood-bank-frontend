@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FeedbackService {
-  private baseUrl = 'http://your-backend-api.com/api/feedback';
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/feedback';
 
   constructor(private http: HttpClient) {}
 

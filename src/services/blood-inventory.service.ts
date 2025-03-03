@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BloodInventoryService {
-  private baseUrl = 'http://your-backend-api.com/api/blood-inventory'; // Replace with actual API URL
+  private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/blood-inventory'; // Replace with actual API URL
 
   constructor(private http: HttpClient) {}
 

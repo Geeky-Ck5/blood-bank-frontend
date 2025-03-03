@@ -55,7 +55,9 @@ export class MessagesComponent implements OnInit {
 
   sendMessage() {
     const senderId = Number(localStorage.getItem('userId')) || null;
-    const recipientId = this.selectedRecipientId ? Number(this.selectedRecipientId) : null;
+    // If no recipient is selected, default to Admin
+    const recipientId = this.selectedRecipientId ? Number(this.selectedRecipientId) : (this.role !== 'admin' ? 1 : null);
+
 
     if (!senderId || !recipientId) {
       console.error("User ID or Recipient ID is missing.");
