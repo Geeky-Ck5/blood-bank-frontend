@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from '../../services/notifications.service';
+import {NotificationService} from '../../services/notifications.service';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,20 +17,24 @@ import { ActivatedRoute } from '@angular/router';
 export class RecipientNotificationsComponent implements  OnInit {
   role: 'donor' | 'recipient' = 'recipient'; // Default to recipient
   notifications: any[] = [];
+  userId: number | null = null;
 
-  constructor(private notificationsService: NotificationsService, private route: ActivatedRoute) {
+  constructor(private notificationsService: NotificationService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.role = this.route.snapshot.data['role'] || 'donor'; // Default to donor
-    this.loadNotifications();
     if (this.role === 'donor') {
       this.loadEligibilityReminders();
+    }
+    this.userId = Number(localStorage.getItem('userId'));
+    if (this.userId) {
+      this.loadNotifications();
     }
   }
 
   loadNotifications() {
-    this.notificationsService.getNotifications(this.role).subscribe({
+    this.notificationsService.getNotifications(this.userId!).subscribe({
       next: (data) => {
         this.notifications = data;
       },
@@ -41,13 +45,13 @@ export class RecipientNotificationsComponent implements  OnInit {
   }
 
   markAsRead(notificationId: number) {
-    this.notificationsService.markNotificationAsRead(notificationId).subscribe({
+    this.notificationsService.markAsRead(notificationId).subscribe({
       next: () => {
         const notification = this.notifications.find((n) => n.id === notificationId);
         if (notification) notification.isRead = true;
         console.log('Notification marked as read.');
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error marking notification as read:', err);
       },
     });
@@ -55,12 +59,12 @@ export class RecipientNotificationsComponent implements  OnInit {
 
 
   loadEligibilityReminders() {
-    this.notificationsService.getEligibilityReminders().subscribe({
-      next: (data) => {
+    this.notificationsService.getNotifications(this.userId!).subscribe({
+      next: (data: any) => {
         // Add eligibility reminders to the notification list
         this.notifications = [...this.notifications, ...data];
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading eligibility reminders:', err);
       },
     });
