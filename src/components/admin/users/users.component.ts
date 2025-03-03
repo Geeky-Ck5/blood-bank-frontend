@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
 
   // Fetch all users
   fetchUsers(): void {
-    this.http.get('http://localhost:8080/api/basic-details').subscribe({
+    this.http.get('https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/basic-details').subscribe({
       next: (response: any) => {
         this.users = response;
         console.log('Users fetched:', this.users);
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
     const newStatus = user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
 
     this.http
-      .put(`http://localhost:8080/api/${user.userId}/status`, { status: newStatus })
+      .put(`https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/${user.userId}/status`, { status: newStatus })
       .subscribe({
         next: () => {
           user.status = newStatus; // Update UI after successful toggle
