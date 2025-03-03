@@ -17,4 +17,19 @@ export class BloodRequestService {
   getBloodRequestHistory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/history`);
   }
+
+
+  getRequestsByBloodGroup(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/stats/blood-group`);
+  }
+
+
+  getRequestsByUser(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/stats/user`);
+  }
+
+
+  getRequestsByPriority(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/stats/priority`);
+  }
 }
