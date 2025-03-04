@@ -112,6 +112,20 @@ export const routes: Routes = [
             (m) => m.NotificationsComponent
           ),
       },
+      {
+        path: 'blood-requests',
+        loadComponent: () =>
+          import('../components/admin/blood-requests/blood-requests.component').then(
+            (m) => m.BloodRequestsComponent
+          ),
+      },
+      {
+        path: 'community-stories',
+        loadComponent: () =>
+          import('../components/admin/community-stories/community-stories.component').then(
+            (m) => m.CommunityStoriesComponent
+          ),
+      },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
     ],
   },
