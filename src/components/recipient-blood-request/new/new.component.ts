@@ -12,22 +12,22 @@ import { BloodRequestService } from '../../../services/blood-request.service';
   styleUrl: './new.component.scss'
 })
 export class NewComponent {
-  userId = 1;  //
+  userId = 1;
   request = {
-    bloodGroup: '',       //
-    unitsRequested: 1,    //
-    priority: 'normal',   //
-    reason: '',           //
-    requestDate: new Date().toISOString().split('T')[0], // ✅ Auto-sets today’s date
-    status: 'PENDING' //
+    bloodGroup: '',
+    unitsRequested: 1,
+    priority: 'normal',
+    reason: '',
+    requestDate: new Date().toISOString().split('T')[0], // Auto-sets today’s date
+    status: 'PENDING'
   };
 
   constructor(private bloodRequestService: BloodRequestService) {}
 
   onSubmit() {
     if (!this.request.bloodGroup || !this.request.unitsRequested) {
-      alert('Please fill in all required fields.');
       this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
+      alert('Please fill in all required fields.');
       return;
     }
 
