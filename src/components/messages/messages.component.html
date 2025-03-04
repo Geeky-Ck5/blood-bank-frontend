@@ -6,7 +6,7 @@
       <strong *ngIf="msg.senderId !== userId">Admin:</strong>
       <strong *ngIf="msg.senderId === userId">You:</strong>
       <p>{{ msg.message }}</p>
-      <span class="message-time">{{ msg.timestamp | date: 'short' }}</span>
+      <span class="message-time">{{ msg.timestamp | date: 'yyyy-MM-dd HH:mm' }}</span>
       <button *ngIf="msg.status === 'UNREAD'" (click)="markAsRead(msg.messageId)">Mark as Read</button>
     </div>
   </div>
