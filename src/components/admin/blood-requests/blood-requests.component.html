@@ -1,0 +1,42 @@
+<div class="blood-requests-container">
+  <h2>Manage Blood Requests</h2>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <table *ngIf="!loading && !errorMessage">
+    <thead>
+    <tr>
+      <th>Request ID</th>
+      <th>User</th>
+      <th>Blood Type</th>
+      <th>Quantity</th>
+      <th>Status</th>
+      <th>Reason</th>
+      <th>Priority</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let request of bloodRequests">
+      <td>{{ request.requestId }}</td>
+      <td>{{ request.userId }}</td>
+      <td>{{ request.bloodType }}</td>
+      <td>{{ request.quantity }}</td>
+      <td [ngClass]="{'approved': request.status === 'APPROVED', 'rejected': request.status === 'REJECTED'}">
+        {{ request.status }}
+      </td>
+      <td>{{ request.reason }}</td>
+      <td [ngClass]="{'high-priority': request.priority === 'HIGH'}">
+        {{ request.priority }}
+      </td>
+      <td>
+        <button class="approve" (click)="approveRequest(request.requestId)" [disabled]="request.status === 'APPROVED'">Approve</button>
+        <button class="reject" (click)="rejectRequest(request.requestId)" [disabled]="request.status === 'REJECTED'">Reject</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="bloodRequests.length === 0 && !loading && !errorMessage">No blood requests available.</p>
+</div>

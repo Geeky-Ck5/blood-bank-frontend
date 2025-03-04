@@ -109,6 +109,9 @@ export class HeaderComponent implements OnInit {
     } else if (this.role === 'recipient') {
       window.location.href = '/recipient/blood-request/new';
     }
+    else if (this.role === 'admin') {
+      window.location.href = '/admin/blood-requests';
+    }
   }
   /**
    * Log out the user by clearing session storage and redirecting to home.

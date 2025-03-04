@@ -32,4 +32,8 @@ export class BloodRequestService {
   getRequestsByPriority(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/stats/priority`);
   }
+
+  updateBloodRequestStatus(requestId: number, status: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${requestId}/update-status?status=${status}`, {});
+  }
 }
