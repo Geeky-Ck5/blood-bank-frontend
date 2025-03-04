@@ -12,25 +12,27 @@ import { BloodRequestService } from '../../../services/blood-request.service';
   styleUrl: './new.component.scss'
 })
 export class NewComponent {
-  userId = 1;
+  userId = 1;  // ✅ TODO: Replace with the actual logged-in user's ID
+
   request = {
     bloodGroup: '',
     unitsRequested: 1,
     priority: 'normal',
     reason: '',
-    requestDate: new Date().toISOString().split('T')[0], // Auto-sets today’s date
+    requestDate: new Date().toISOString().split('T')[0], // ✅ Auto-sets today’s date
     status: 'PENDING'
   };
 
   constructor(private bloodRequestService: BloodRequestService) {}
 
   onSubmit() {
+    this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
     if (!this.request.bloodGroup || !this.request.unitsRequested) {
-      this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
       alert('Please fill in all required fields.');
       return;
     }
 
+    // ✅ Now passing both `userId` and `request` to `submitBloodRequest`
     this.bloodRequestService.submitBloodRequest(this.userId, this.request).subscribe({
       next: (response) => {
         alert('Your blood request has been submitted.');
