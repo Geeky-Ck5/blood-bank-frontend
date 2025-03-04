@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BloodRequestService } from '../../../services/blood-request.service';
 
@@ -11,8 +11,8 @@ import { BloodRequestService } from '../../../services/blood-request.service';
   templateUrl: './new.component.html',
   styleUrl: './new.component.scss'
 })
-export class NewComponent {
-  userId = 1;  // ✅ TODO: Replace with the actual logged-in user's ID
+export class NewComponent implements OnInit {
+  userId: number = 0;
 
   request = {
     bloodGroup: '',
@@ -24,6 +24,10 @@ export class NewComponent {
   };
 
   constructor(private bloodRequestService: BloodRequestService) {}
+
+  ngOnInit() {
+    this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
+  }
 
   onSubmit() {
     this.userId = Number(localStorage.getItem('userId')) || 0; // Fetch user ID
