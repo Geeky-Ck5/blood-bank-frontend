@@ -69,7 +69,7 @@
     <p *ngIf="!upcomingEvents || upcomingEvents.length === 0">No upcoming events</p>
     <ul *ngIf="upcomingEvents && upcomingEvents.length > 0">
       <li *ngFor="let event of upcomingEvents">
-        <strong>{{ event.name }}</strong> - {{ event.date }}
+        <strong>{{ event.eventName }}</strong> - {{ event.eventDate }}
       </li>
     </ul>
   </div>
