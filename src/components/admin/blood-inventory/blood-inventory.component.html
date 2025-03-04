@@ -1,34 +1,35 @@
-<!-- Blood Inventory Summary -->
-<div class="blood-inventory">
-  <h2>Blood Inventory Summary</h2>
-  <div class="summary-section">
-    <h3>Blood Group Units Available</h3>
-    <div class="summary-card">
+<div class="blood-inventory-container">
+  <!-- Blood Inventory Summary -->
+  <div class="inventory-section">
+    <h2>Blood Inventory Summary</h2>
+    <div class="summary-cards">
       <div class="card" *ngFor="let item of bloodInventory">
         <div class="blood-group">{{ item.bloodGroup }}</div>
-        <div class="units">{{ item.unitsAvailable }}</div>
+        <div class="units">
+          <span>{{ item.unitsAvailable }}</span> units available
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Expiry Alerts -->
-<div class="expiry-alerts-section">
-  <h3>Expiry Alerts</h3>
-  <table>
-    <thead>
-    <tr>
-      <th>Blood Group</th>
-      <th>Expiry Date</th>
-      <th>Units Expiring Soon</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let alert of expiryAlerts">
-      <td>{{ alert.bloodGroup }}</td>
-      <td>{{ alert.expiryDate | date: 'yyyy-MM-dd' }}</td>
-      <td>{{ alert.unitsExpiringSoon }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <!-- Expiry Alerts -->
+  <div class="expiry-alerts-section">
+    <h2>Expiry Alerts</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Blood Group</th>
+        <th>Expiry Date</th>
+        <th>Units Expiring Soon</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let alert of expiryAlerts" [ngClass]="{'critical': isCritical(alert.expiryDate)}">
+        <td>{{ alert.bloodGroup }}</td>
+        <td>{{ alert.expiryDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ alert.unitsExpiringSoon }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
