@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {CommunityStoriesService} from '../../../services/community.service';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-community-stories',
   standalone: true,
   imports: [
     NgIf,
-    NgForOf,
-    NgClass
+    NgForOf
   ],
   templateUrl: './community-stories.component.html',
   styleUrl: './community-stories.component.scss'
