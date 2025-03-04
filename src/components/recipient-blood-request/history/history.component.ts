@@ -15,14 +15,18 @@ import {NgForOf, NgIf} from '@angular/common';
 export class HistoryComponent implements OnInit {
   requests: any[] = [];
 
+
   constructor(private bloodRequestService: BloodRequestService) {}
 
   ngOnInit() {
     this.loadBloodRequests();
+
   }
 
   loadBloodRequests() {
-    this.bloodRequestService.getBloodRequestHistory().subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+    this.bloodRequestService.getBloodRequestHistory(parseInt(userId)).subscribe({
       next: (data) => {
         this.requests = data;
       },

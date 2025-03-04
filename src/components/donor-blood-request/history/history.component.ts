@@ -22,7 +22,9 @@ export class HistoryComponent implements OnInit {
   }
 
   loadBloodRequests() {
-    this.bloodRequestService.getBloodRequestHistory().subscribe({
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+    this.bloodRequestService.getBloodRequestHistory(parseInt(userId)).subscribe({
       next: (data) => {
         this.requests = data;
       },
