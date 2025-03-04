@@ -1,0 +1,61 @@
+.notifications-container {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.users-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.user-item input {
+  margin-right: 10px;
+}
+
+.message-section {
+  margin-top: 15px;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.send-btn {
+  background: green;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.send-btn:hover {
+  opacity: 0.8;
+}

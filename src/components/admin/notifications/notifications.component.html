@@ -1,1 +1,35 @@
-<p>notifications works!</p>
+<div class="notifications-container">
+  <h2>Send Bulk Notifications</h2>
+
+  <!-- Filters -->
+  <div class="filter-section">
+    <label for="bloodGroup">Filter by Blood Group:</label>
+    <select id="bloodGroup" [(ngModel)]="selectedBloodGroup" (change)="applyFilters()">
+      <option value="">All</option>
+      <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+    </select>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="onlyEligible" (change)="applyFilters()" />
+      Show Only Eligible Users
+    </label>
+  </div>
+
+  <!-- Users List -->
+  <div class="users-list">
+    <h3>Users ({{ filteredUsers.length }})</h3>
+    <p *ngIf="filteredUsers.length === 0">No users found with the selected filters.</p>
+
+    <div *ngFor="let user of filteredUsers" class="user-item">
+      <input type="checkbox" [checked]="selectedUsers.includes(user.userId)" (change)="toggleUserSelection(user.userId)" />
+      <strong>{{ user.firstName }} {{ user.lastName }}</strong> ({{ user.bloodGroup }}) - {{ user.status }}
+    </div>
+  </div>
+
+  <!-- Message Input -->
+  <div class="message-section">
+    <h3>Notification Message</h3>
+    <textarea [(ngModel)]="messageText" placeholder="Enter your notification message..."></textarea>
+    <button (click)="sendBulkNotification()" class="send-btn">Send Notification</button>
+  </div>
+</div>

@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class NotificationService {
   private baseUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/notifications';
+  private usersUrl = 'https://bloodbank-api-csbxgsaabfc4bjbn.eastus-01.azurewebsites.net/api/basic-details';
+
 
   constructor(private http: HttpClient) {}
 
@@ -36,5 +38,12 @@ export class NotificationService {
    */
   sendBulkNotifications(userIds: number[], message: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/bulk-send`, { userIds, message });
+  }
+
+  /**
+   * ✅ Fetch All Users
+   */
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.usersUrl);
   }
 }
